@@ -25,7 +25,7 @@
     <select id="selectMember" resultType="com.b2b.web.model.MemberVO">
         SELECT *
         FROM world.tbl_member
-        WHERE userid = #{userid}
+        WHERE username = #{username}
     </select>
 
     <select id="readWithPW" resultType="com.b2b.web.model.MemberVO">

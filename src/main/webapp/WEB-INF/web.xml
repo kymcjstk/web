@@ -52,4 +52,16 @@
 	</filter-mapping>
 	<!--  utf-8설정 추가 끝-->
 	
+	<!-- 에러구분처리 시작  -->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/common/error/500/</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/common/error/404/</location>
+	</error-page>
+	<!-- 에러구분처리 끝  -->
+	
 </web-app>

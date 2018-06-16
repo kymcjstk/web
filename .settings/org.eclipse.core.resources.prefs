@@ -2,5 +2,4 @@ eclipse.preferences.version=1
 encoding//src/main/java/com/b2b/web/HomeController.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
 encoding//src/test/java/com/doubles/ex01/MemberDAOTest.java=UTF-8
-encoding/<project>=UTF-8
 separateDerivedEncodings=true

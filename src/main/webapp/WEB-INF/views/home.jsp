@@ -1,12 +1,5 @@
-
-/web/images/git1.png
-"src/main/webapp/WEB-INF/views/include/header.jsp"
-/web/images/git1.png
-b2b_web/src/main/webapp/WEB-INF/views/include/head.jsp
-
-<!--   include file="include/header.jsp"  -->
-<jsp:include page="/WEB-INF/views/include/header.jsp"/>
-
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%> 
+<%@include file="include/header.jsp" %>
 <body>
 <h1>
 	Hello world! 
@@ -107,9 +100,8 @@ web.xml페이지내 dtd변경
  - git repo 추가한 후, 경로 지정 및 계정연결
  --> team --> share project... --> 레퍼지토리 지정 후,  완료 
  --> add to index dlgn,  commit 하여 완료  
- 
- <img src="/web/images/git1.png">
- <img src="/web/images/git2.png">
+ <img src="/b2b_web/images/git1.png">
+ <img src="/b2b_web/images/git2.png">
  
  commit and push = commit
  checkout
@@ -288,6 +280,11 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
 <!--base-package 속성 값에 해당하는 패키지 내부의 클래스들을 모두 조사-->
 <!--AOP 설정을 통한 자동적인 Proxy 객체 생성을 위한 설정-->
 <!--인터셉터 설정-->
+
+- 에러처리
+1.web.xml에 에러관련 구문추가
+2.에러처리 컨트롤로 추가 - commonerrorcontroller.java
+3.error.jsp 에러페이지 추가
 
  
  6. 게시판 개발 및 인크루드등 기본 구문 사용  - 6/19

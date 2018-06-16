@@ -79,7 +79,7 @@ public class HomeController {
         model.addAttribute(vo);
         model.addAttribute("vo", vo);
         
-        return "test2";
+        return "/commons/error_common";
     }
     
 	@RequestMapping(value = "/test3", method = RequestMethod.GET)
@@ -97,10 +97,10 @@ public class HomeController {
         logger.info("test32 : " + vo2);
         System.out.println("dd32" + vo2);
         
-        //(mysql �븳湲��엯�젰/異쒕젰)
-        //mysql �뀒�씠釉� �븳湲��엯�젰 - ALTER TABLE �뀒�씠釉붾챸 convert to charset utf8;
+        //(mysql 한글입력/출력)
+        //mysql한글입력/출력 - ALTER TABLE 테이블명 convert to charset utf8;
         
-        //- my.cnf �뙆�씪�뿉 �븘�옒 �궡�슜�쓣 異붽��븳�떎. 
+        //- my.cnf 한글입력/출력 
 
         //[client]
         //default-character-set = utf8
