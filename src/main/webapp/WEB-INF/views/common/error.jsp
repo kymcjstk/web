@@ -14,13 +14,8 @@
         <%-- Main content --%>
         <section class="content container-fluid">
 
-            <h3><i class="fa fa-warning text-red"></i> ${msg}</h3>
-            <ul>
-                <c:forEach items="${exception.getStackTrace()}" var="stack">
-                    <li>${stack.toString()}</li>
-                </c:forEach>
-            </ul>
-
+            <h3><i class="fa fa-warning text-red"></i><c:out value="${msg}"></c:out></h3>
+            
         </section>
         <%-- /.content --%>
     </div>

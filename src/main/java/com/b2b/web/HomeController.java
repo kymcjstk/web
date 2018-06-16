@@ -79,7 +79,7 @@ public class HomeController {
         model.addAttribute(vo);
         model.addAttribute("vo", vo);
         
-        return "/commons/error_common";
+        return "test2";
     }
     
 	@RequestMapping(value = "/test3", method = RequestMethod.GET)
