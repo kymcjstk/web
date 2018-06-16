@@ -41,6 +41,44 @@
      </tbody>
  </table>
  
+ <table>
+	 <tr>
+		 <td>
+		 <form name="form" id="form" action="${path}/board/list" method="post" >
+		 	<input type="text" class="form-control" name="title" id="title" value="${keyword}" placeholder="검색어2">
+		 </form>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-primary btn-flat" id="searchBtn" onclick="search();">
+                    <i class="fa fa-search"></i> 검색
+                </button>
+            </span>
+		 </td>
+	 </tr>
+</table>
+<script type="text/javascript">
+
+	function search()
+	{
+		var f = document.getElementById("form");
+        f.action = '${path}/board/list';
+        f.submit();
+    }
+    
+</script>
+ 1. eq (==)
+ 비교하고자 하는 값이 동일한지를 확인할때 사용한다.
+
+2. ne (!=)
+ 비교하는 값이 동일하지 않은지 확인할때 사용한다.
+
+3. empty (== null)
+ 비교하는 값이 null 인지 확인할때 사용한다. 
+ * null이 아닌경우를 표현할때는 !empty 로 표현하면 된다.
+
+<c:if test="${empty name}">
+    홍길동이 아닙니다.
+</c:if>
+ 
  <!--  페이징 기능 추가필요 -->
  
  </body>
