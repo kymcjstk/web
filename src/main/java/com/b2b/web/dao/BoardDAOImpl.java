@@ -1,0 +1,52 @@
+package com.b2b.web.dao;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import com.b2b.web.model.BoardVO;
+
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Repository
+public class BoardDAOImpl implements BoardDAO {
+    
+    private static final String NAMESPACE = "com.b2b.web.board.mapper.MemberMapper";
+    
+    private final SqlSession sqlSession;
+
+    @Inject
+    public BoardDAOImpl(SqlSession sqlSession) {
+        this.sqlSession = sqlSession;
+    }
+    
+    @Override
+    public String getTime() {
+        return sqlSession.selectOne(NAMESPACE + ".getTime");
+    }
+    
+    
+    @Override
+    public BoardVO readMember(int bno) throws Exception {
+        return (BoardVO) sqlSession.selectOne(NAMESPACE + ".selectMember", bno);
+    }  
+    
+    @Override
+    public List<BoardVO> listSearch(String writer) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".joinselect", writer);
+    }
+    /*
+     * 복수에 데이터임으로 list나 map형식으로 받아져야됨
+     */
+    
+    @Override
+    public BoardVO joinselect(String writer) throws Exception {
+        return (BoardVO) sqlSession.selectOne(NAMESPACE + ".selectMember", writer);
+        /*
+         *구문확인하여 사용필요 
+         *
+         */
+    }  
+}
