@@ -27,13 +27,13 @@
 	</servlet>
 		
 	<servlet-mapping>
-		<!--
-		<servlet-name>appServlet</servlet-name>
 		
+		<servlet-name>appServlet</servlet-name>
+		<!-- 
 		확인 및 정리필요
-		--> 
+		
 		<servlet-name>dispatcher</servlet-name>
-		 
+		 --> 
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
