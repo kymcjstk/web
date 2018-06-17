@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.b2b.web.dao.BoardDAO;
 import com.b2b.web.model.BoardVO;
 import com.b2b.web.model.SearchVO;
+import com.b2b.web.model.PageMaker;
 
 @Controller
 @RequestMapping("/board")
@@ -26,7 +27,7 @@ public class BoardController {
     private BoardDAO boardao;
     
     @RequestMapping(value = "/list")
-	public String list(@ModelAttribute("search") SearchVO search, Model model) throws Exception {
+	public String list(@ModelAttribute("search") SearchVO search, BoardVO boardvo, Model model) throws Exception {
 		
     	/*
     	 * request 파라미터값 받아옴 @ModelAttribute("search") BoardVO search (설정된 값 출력)
@@ -102,14 +103,29 @@ public class BoardController {
         System.out.println("size2:"+size);
         
         System.out.println("search_tatal:" + search);
-        System.out.println("search:" + search.getTitle());
+        System.out.println("boardvo_tatal:" + boardvo);
+        System.out.println("search:" + boardvo.getTitle());
         System.out.println("title_vo:" + title);
         System.out.println("title_vo2:" + title2);
         System.out.println("element:" + element);
         System.out.println("title_vo2:" + title2);
         
-        model.addAttribute("list", boardao.listSearch(search.getTitle()));
-        model.addAttribute("search", search.getTitle());
+        model.addAttribute("list", boardao.listSearch(boardvo.getTitle()));
+        model.addAttribute("search", boardvo.getTitle());
+        
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(search);
+        
+        pageMaker.setTotalCount(boardao.listSearchCount(search));
+
+        model.addAttribute("list", boardao.listSearch(search)); // 게시글 목록
+        model.addAttribute("boardCount", boardao.listSearchCount(search)); // 게시글 갯수
+        
+        model.addAttribute("pageMaker", pageMaker);
+        
+        System.out.println("list:" + boardao.listSearch(search));
+        System.out.println("boardCount:" + boardao.listSearchCount(search));
+        System.out.println("pageMaker:" + pageMaker);
                 
         return "/board/list";
     }

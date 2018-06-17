@@ -2,17 +2,20 @@ package com.b2b.web.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.b2b.web.model.BoardVO;
+import com.b2b.web.model.Criteria;
+import com.b2b.web.model.SearchVO;
 
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
-    
+	
     private static final String NAMESPACE = "com.b2b.web.board.mapper.MemberMapper";
     
     private final SqlSession sqlSession;
@@ -48,5 +51,19 @@ public class BoardDAOImpl implements BoardDAO {
          *구문확인하여 사용필요 
          *
          */
-    }  
+    } 
+    
+
+    
+ // 게시글 전체 목록 : 페이징 + 검색
+    @Override
+    public List<BoardVO> listSearch(SearchVO criteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listSearch", criteria);
+    }
+
+    // 게시글 전체 갯수 : 검색
+    @Override
+    public int listSearchCount(SearchVO criteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".listSearchCount", criteria);
+    }
 }

@@ -3,9 +3,12 @@ package com.b2b.web.model;
 import java.util.Arrays;
 import java.util.Date;
 
-public class SearchVO extends BoardVO {
-/* BoardVO 를 포함함 */	
-	
+public class SearchVO extends Criteria {
+/* 
+ * Criteria 를 포함함 
+ * BoardVO
+ * public class SearchVO extends BoardVO {
+ */	
 	private String searchType;  // 검색 유형
     private String keyword;     // 검색 키워드
     
@@ -31,7 +34,8 @@ public class SearchVO extends BoardVO {
         return "SearchVO{" +
                 "searchType='" + searchType + '\'' +
                 ", keyword='" + keyword + '\'' +
-                ", title='" + getTitle() + '\'' +
+                ", getPage='" + getPage() + '\'' +
+               /* ", title='" + getTitle() + '\'' + */
                 '}';
     }
 }

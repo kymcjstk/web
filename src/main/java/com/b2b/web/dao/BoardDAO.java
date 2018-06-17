@@ -3,10 +3,10 @@ package com.b2b.web.dao;
 import java.util.List;
 
 import com.b2b.web.model.BoardVO;
-
+import com.b2b.web.model.SearchVO;
 
 public interface BoardDAO {
-
+	
     // 현재시간체크
     public String getTime();
     
@@ -19,7 +19,13 @@ public interface BoardDAO {
     /*
      * List형으로 받음
      */
-	    
+    
+    public int listSearchCount(SearchVO criteria) throws Exception;
+
+    public List<BoardVO> listSearch(SearchVO criteria) throws Exception;
+
+	
+	 
 
 
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class BoardVO {
 	
+	
 	private int bno;    
 	private String title;
     private String content;
