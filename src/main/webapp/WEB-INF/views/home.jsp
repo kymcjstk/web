@@ -305,6 +305,7 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
 ... x플랫폼, 넥사크로 설치사용
 ... srping boot 이용 + radis등 캐쉬
 ... 엥귤러 및 nodejs/리엑트js 사용/활용
+... velocity, postgresql, graddle 사용
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>

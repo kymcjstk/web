@@ -8,5 +8,5 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF=8">
 <title>테스트홈</title>
-<script src="/js/jquery/jquery.js"></script>
+<script src="${path}/js/jquery/jquery.js"></script>
 </head>

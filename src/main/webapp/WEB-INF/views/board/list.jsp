@@ -45,7 +45,8 @@
 	 <tr>
 		 <td>
 		 <form name="form" id="form" action="${path}/board/list" method="post" >
-		 	<input type="text" class="form-control" name="title" id="title" value="${keyword}" placeholder="검색어2">
+		 	<input type="text" class="form-control" name="title" id="title" value="${search}" placeholder="검색어2" />
+		 	<input type="text" class="form-control" name="searchType" id="searchType" value="" />
 		 </form>
             <span class="input-group-btn">
                 <button type="button" class="btn btn-primary btn-flat" id="searchBtn" onclick="search();">
