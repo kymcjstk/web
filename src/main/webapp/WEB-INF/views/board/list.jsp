@@ -44,23 +44,58 @@
  <table>
 	 <tr>
 		 <td>
-		 <form name="form" id="form" action="${path}/board/list" method="post" >
-		 	<input type="text" class="form-control" name="keyword" id="keyword" value="${search}" placeholder="검색어2" />
-		 	<input type="text" class="form-control" name="searchType" id="searchType" value="" />
-		 	<input type="text" class="form-control" name="page" id="page" value="" />
-		 </form>
-            <span class="input-group-btn"m>
-                <button type="button" class="btn btn-primary btn-flat" id="searchBtn" onclick="search();">
-                    <i class="fa fa-search"></i> 검색
-                </button>
-            </span>
+		 <%--페이징영역--%>
+             <div class="text-center">
+                 <ul class="pagination">
+                     <%--prev가 true 일 경우--%>
+                     <c:if test="${pageMaker.prev}">
+                         <%--UriComponents를 사용--%>
+                         <li><a href="${path}/board/list${pageMaker.makeSearch(pageMaker.startPage-1)}">&laquo;</a></li>
+                     </c:if>
+                     <%--시작 페이지 ~ 마지막 페이지까지 반복--%>
+                     <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                         <%--현재 목록 페이지가 idx와 일치하면 현재페이지 표시--%>
+                         <li <c:out value="${pageMaker.criteria.page == idx? 'class=active':''}"/>>
+                                 <%--UriComponents를 사용--%>
+                             <a href="${path}/board/list${pageMaker.makeSearch(idx)}">${idx}</a>
+                         </li>
+                     </c:forEach>
+                     <%--next가 true이고 endPage가 0이상일 경우--%>
+                     <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                         <%--UriComponents를 사용--%>
+                         <li><a href="${path}/board/list${pageMaker.makeSearch(pageMaker.endPage + 1)}">&raquo;</a></li>
+                     </c:if>
+                 </ul>
+             </div>
+
+	         <div class="box-footer">
+	             <br/>
+	             <div class="form-group col-sm-2">
+	             <form name="form" id="form" action="${path}/board/list" method="post" >
+	                 <select class="form-control" name="searchType" id="searchType">
+	                     <option value="n" <c:out value="${criteria.searchType == null ? 'selected' : ''}"/>>:::::: 선택 ::::::</option>
+	                     <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+	                     <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+	                     <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+	                     <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+	                     <option value="cw" <c:out value="${criteria.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
+	                     <option value="tcw" <c:out value="${criteria.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
+	                 </select>
+	             </div>
+	             <div class="form-group col-sm-10">
+	                 <div class="input-group">
+	                     <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
+	             </form>
+	                     <span class="input-group-btn">
+	                         <button type="button" class="btn btn-primary btn-flat" id="searchBtn" onclick="search();">
+	                             <i class="fa fa-search"></i> 검색
+	                         </button>
+	                     </span>
+	                 </div>
+	             </div>
+	         </div>
 		 </td>
-	 </tr>
-	 <tr>
-	 <td>
-	 ${pageMaker.makeSearch(pageMaker.endPage + 1)}
-	 </td>
-	 </tr>
+	 </tr>	 
 </table>
 <script type="text/javascript">
 

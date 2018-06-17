@@ -113,13 +113,18 @@ public class BoardController {
         model.addAttribute("list", boardao.listSearch(boardvo.getTitle()));
         model.addAttribute("search", boardvo.getTitle());
         
-        PageMaker pageMaker = new PageMaker();
-        pageMaker.setCriteria(search);
+        System.out.println("search_test1:" + search.getPage());
+        System.out.println("search_test2:" + search.getPageStart());
+        System.out.println("search_test3:" + search.getPerPageNum());
+        //쿼리 필요한 값들은 넘겨진값 과 이를 통한 Criteria.java에서 구해져선 반환됨
         
-        pageMaker.setTotalCount(boardao.listSearchCount(search));
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCriteria(search); //값을 pageMaker입력 - search 값이 criteria 로 지정됨
+        
+        pageMaker.setTotalCount(boardao.listSearchCount(search)); //페이징 처리를 true,false 및 값 계산처리
 
         model.addAttribute("list", boardao.listSearch(search)); // 게시글 목록
-        model.addAttribute("boardCount", boardao.listSearchCount(search)); // 게시글 갯수
+        model.addAttribute("boardCount", boardao.listSearchCount(search)); // 게시글 갯수 딘슨 츨력용
         
         model.addAttribute("pageMaker", pageMaker);
         

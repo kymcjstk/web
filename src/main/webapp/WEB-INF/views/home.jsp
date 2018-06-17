@@ -302,6 +302,7 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
  
  10. restful api연동 - 6/28
 
+... git update(pull)관련 사용방법 확인
 ... 배포 및 젠킨스 설정/활용
 ... x플랫폼, 넥사크로 설치사용
 ... srping boot 이용 + radis등 캐쉬

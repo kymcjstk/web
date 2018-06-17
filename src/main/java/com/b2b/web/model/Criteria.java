@@ -11,7 +11,7 @@ public class Criteria {
     public Criteria() {
 
         this.page = 1;
-        this.perPageNum = 2;
+        this.perPageNum = 2;  //페이지당 2개 <!-- 20개
 
     }
 
@@ -31,7 +31,7 @@ public class Criteria {
 
         // 0 이하, 100보다 클 경우 10으로 강제
         if (perPageNum <=0 || perPageNum > 100) {
-            this.perPageNum = 2;
+            this.perPageNum = 2;  //2수정 <-- 10
             return;
         }
 

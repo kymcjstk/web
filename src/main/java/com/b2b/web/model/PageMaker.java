@@ -82,12 +82,13 @@ public class PageMaker {
         UriComponents uriComponents = UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("perPageNum", criteria.getPerPageNum())
-                .queryParam("searchType", ((SearchVO) criteria).getSearchType())
+                .queryParam("searchType", ((SearchVO) criteria).getSearchType()) //세부에 SearchVO 지정값을 호출함
                 .queryParam("keyword", encoding(((SearchVO) criteria).getKeyword()))
                 .build();
 
         return uriComponents.toUriString();
     }
+    // 결과적으로 예제: ?page=1&perPageNum=2&searchType=t&keyword=abc 로 반환함
 
     private String encoding(String keyword) {
         if (keyword == null || keyword.trim().length() == 0) {
@@ -145,11 +146,11 @@ public class PageMaker {
     }
 
     public Criteria getCriteria() {
-        return criteria;
+        return criteria;  //해당처리를 통해서, 출력됨
     }
 
     public void setCriteria(Criteria criteria) {
-        this.criteria = criteria;
+        this.criteria = criteria;  //해당처리를 통해서, 입력받은 값들을 지정받음
     }
 
     @Override
