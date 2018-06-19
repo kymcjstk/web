@@ -26,19 +26,22 @@ public class MemberDAOTest {
     // �쉶�썝�엯�젰 �뀒�뒪�듃
     @Test
     public void testInsertMember() throws Exception {
-        MemberVO memberVO = new MemberVO();
+    /*    MemberVO memberVO = new MemberVO();
         memberVO.setUserid("user01");
         memberVO.setUserpw("user00");
         memberVO.setUsername("user00");
         memberVO.setEmail("user00@mail.com");
 
         memberDAO.insertMember(memberVO);
+        */
     }
 
     // �쉶�썝議고쉶 �뀒�뒪�듃 1 : �븘�씠�뵒
     @Test
     public void testReadMember() throws Exception {
-        memberDAO.readMember("user00");
+        /*
+    	memberDAO.readMember("user00");
+    	*/
     }
 
     // �쉶�썝議고쉶 �뀒�뒪�듃 2 : �븘�씠�뵒 + 鍮꾨�踰덊샇

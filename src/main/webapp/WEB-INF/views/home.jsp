@@ -287,13 +287,20 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
 3.error.jsp 에러페이지 추가
 
  
- 6. 게시판 개발 및 인크루드등 기본 구문 사용  - 6/20
+ 6. 게시판 개발 및 인크루드등 기본 구문 사용  - 6/23
  
- //list, map 입/출력 확인필요
+ //list, map 입/출력 (1차완료), 추가확인필요
  //다이나믹쿼리 사용 테스트
  <!-- 트랜젝션 처리-->
  
- 7. 파일 다운로드 /업로드 - 6/21
+ maven project 배포등 방법확인 (완료)
+ --> run as등에서,  maven (test:테스트, install:  generate-sources 단계부터 compile, test 명령 등을 거쳐 install 명령을 실행한다. , deploy: 통합 또는 릴리스 환경에서 수행되며 최종 패키지를 원격 저장소에 복사하여 다른 개발자 및 프로젝트와 공유)
+base directory --> 해당 프로젝트 선택
+goals: test, install, deploy등..
+user settings: pom.xml등 setting위치
+maven runtime: maven설치버전
+ 
+ 7. 파일 다운로드 /업로드 - 6/26
  <!--파일 업로드 MultipartResolver 설정-->
  
  8. 세션 및 로그인 - 6/23

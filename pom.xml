@@ -222,4 +222,14 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- maven deploy사용을 위한 저장소 위치설정 -->
+    <distributionManagement>
+       <repository>
+         <id>internal.repo</id>
+         <name>Internal repo</name>
+         <url>file:///home/thara/testesb/in</url>
+       </repository>
+   </distributionManagement>
+   
 </project>
