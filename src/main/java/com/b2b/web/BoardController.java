@@ -1,9 +1,11 @@
 package com.b2b.web;
 
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,19 +143,47 @@ public class BoardController {
     
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("bno") int bno,
-                       @ModelAttribute("criteria") SearchVO criteria, Model model) throws Exception {
+                       @ModelAttribute("criteria") SearchVO criteria, HttpServletResponse response, Model model) throws Exception {
 
     	/*
     	 * request 파라미터값 받아옴 @ModelAttribute("criteria") SearchVO criteria (설정된 값 출력)
     	 * jsp에서도 criteria값을 받을수 있음
     	 */
-        logger.info("================ read() : called ================");
-        logger.info("Get boardVO : " + boardao.read(bno));
-        model.addAttribute(boardao.read(bno));
-        
-        System.out.println("criteria:" + criteria);
-        System.out.println("boardao:" + boardao.read(bno));
-
+    	try //트렌젹션 처리없음 --> 추가필요
+    	{   
+    		BoardVO vo = boardao.read(bno);  
+            System.out.println("view_printa:" + vo);
+            
+            if(vo == null)
+            {
+            	System.out.println("size: null");
+            	//alert처리 후, history.back()등 처리
+            	response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script>");
+                out.flush();
+            }
+            else
+            {   
+            	//viewcount+1 update처리
+            	
+            	//viewcount+1 된 값 set처리 후, 출력
+            	vo.setViewcnt(vo.getViewcnt()+1);            	
+            	System.out.println("view_printb:" + vo);            	
+	            model.addAttribute(vo);       	
+            }
+            
+	        System.out.println("criteria:" + criteria);	        
+    	}
+    	catch(Exception e)
+    	{
+    		 System.out.println("view_printc:");
+    		 e.printStackTrace();
+    		 response.setContentType("text/html; charset=UTF-8");
+             PrintWriter out = response.getWriter();
+             out.println("<script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script>");
+             out.flush();
+    	}
         return "/board/read";
     }
 

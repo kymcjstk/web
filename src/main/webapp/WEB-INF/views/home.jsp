@@ -316,6 +316,11 @@ delete페이지 - 6/29
  
  10. restful api연동 - 7/12
 
+... response.setContentType("text/html; charset=UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.println("<script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script>");
+                    out.flush();
+                    값을 controller에서 불러와 사용하기
 ... classpath 설정변경 및 properties설정 및 사용활용
 ... git update(pull)관련 사용방법 확인
 ... 배포 및 젠킨스 설정/활용
