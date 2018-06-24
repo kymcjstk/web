@@ -66,4 +66,11 @@ public class BoardDAOImpl implements BoardDAO {
     public int listSearchCount(SearchVO criteria) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".listSearchCount", criteria);
     }
+    
+    @Override
+    public BoardVO read(int bno) throws Exception {
+
+        return sqlSession.selectOne(NAMESPACE + ".read", bno);
+
+    }
 }

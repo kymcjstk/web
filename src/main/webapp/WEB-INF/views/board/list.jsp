@@ -4,9 +4,9 @@
 <table class="table table-bordered">
      <tbody>
      <tr>
-         <th style="width: 10px">NO</th>
+         <th style="width: 10px">NO_${search}</th>
          <th>제목</th>
-         <th style="width: 100px">작성자</th>
+         <th style="width: 100px">작성자_${boardvo}</th>
          <th style="width: 150px">작성시간</th>
          <th style="width: 50px">조회</th>
      </tr>
@@ -72,19 +72,20 @@
 	             <br/>
 	             <div class="form-group col-sm-2">
 	             <form name="form" id="form" action="${path}/board/list" method="post" >
+	             	<input type="text" name="title" id="title" value="1" />
 	                 <select class="form-control" name="searchType" id="searchType">
-	                     <option value="n" <c:out value="${criteria.searchType == null ? 'selected' : ''}"/>>:::::: 선택 ::::::</option>
-	                     <option value="t" <c:out value="${criteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
-	                     <option value="c" <c:out value="${criteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
-	                     <option value="w" <c:out value="${criteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
-	                     <option value="tc" <c:out value="${criteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
-	                     <option value="cw" <c:out value="${criteria.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
-	                     <option value="tcw" <c:out value="${criteria.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
+	                     <option value="n" <c:out value="${search.searchType == null ? 'selected' : ''}"/>>:::::: 선택 ::::::</option>
+	                     <option value="t" <c:out value="${search.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+	                     <option value="c" <c:out value="${search.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+	                     <option value="w" <c:out value="${search.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+	                     <option value="tc" <c:out value="${search.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+	                     <option value="cw" <c:out value="${search.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
+	                     <option value="tcw" <c:out value="${search.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
 	                 </select>
 	             </div>
 	             <div class="form-group col-sm-10">
 	                 <div class="input-group">
-	                     <input type="text" class="form-control" name="keyword" id="keywordInput" value="${criteria.keyword}" placeholder="검색어">
+	                     <input type="text" class="form-control" name="keyword" id="keywordInput" value="${search.keyword}" placeholder="검색어">
 	             </form>
 	                     <span class="input-group-btn">
 	                         <button type="button" class="btn btn-primary btn-flat" id="searchBtn" onclick="search();">

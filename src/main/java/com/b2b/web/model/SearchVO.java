@@ -2,7 +2,11 @@ package com.b2b.web.model;
 
 import java.util.Arrays;
 import java.util.Date;
+/*
+import lombok.
 
+@Data
+*/
 public class SearchVO extends Criteria {
 /* 
  * Criteria 를 포함함 

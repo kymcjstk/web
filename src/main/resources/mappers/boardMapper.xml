@@ -4,6 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2b.web.board.mapper.MemberMapper">
 
+	<!--게시글 조회-->
+    <select id="read" resultType="BoardVO">
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM world.tbl_board
+        WHERE bno = #{bno}
+    </select>
+    
     <select id="getTime" resultType="string">
         SELECT NOW()
     </select>

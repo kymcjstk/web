@@ -287,7 +287,7 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
 3.error.jsp 에러페이지 추가
 
  
- 6. 게시판 개발 및 인크루드등 기본 구문 사용  - 6/23
+ 6. 게시판 개발 및 인크루드등 기본 구문 사용  - 6/29
  
  //list, map 입/출력 (1차완료), 추가확인필요
  //다이나믹쿼리 사용 테스트
@@ -299,22 +299,32 @@ base directory --> 해당 프로젝트 선택
 goals: test, install, deploy등..
 user settings: pom.xml등 setting위치
 maven runtime: maven설치버전
+
+read페이지 일부완료 - 6/24
+read내, viewcount update처리 필요
+
+write페이지 - 6/25
+update페이지 - 6/27
+delete페이지 - 6/29
  
- 7. 파일 다운로드 /업로드 - 6/26
+ 7. 파일 다운로드 /업로드 - 7/01
  <!--파일 업로드 MultipartResolver 설정-->
  
- 8. 세션 및 로그인 - 6/23
+ 8. 세션 및 로그인 - 7/03
  
- 9. 결제 - 6/25
+ 9. 결제 - 7/07
  
- 10. restful api연동 - 6/28
+ 10. restful api연동 - 7/12
 
+... classpath 설정변경 및 properties설정 및 사용활용
 ... git update(pull)관련 사용방법 확인
 ... 배포 및 젠킨스 설정/활용
 ... x플랫폼, 넥사크로 설치사용
 ... srping boot 이용 + radis등 캐쉬
 ... 엥귤러 및 nodejs/리엑트js 사용/활용
 ... velocity, postgresql, graddle 사용
+... lombok 사용하여 getter/setter관련 적용 및 이외 기능활용
+... spring security을 통한 로그인/로그아웃 구현
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>

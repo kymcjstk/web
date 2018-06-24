@@ -24,6 +24,8 @@ public interface BoardDAO {
 
     public List<BoardVO> listSearch(SearchVO criteria) throws Exception;
 
+	public BoardVO read(int bno) throws Exception;
+
 	
 	 
 

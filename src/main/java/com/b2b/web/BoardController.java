@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2b.web.dao.BoardDAO;
 import com.b2b.web.model.BoardVO;
@@ -27,10 +29,12 @@ public class BoardController {
     private BoardDAO boardao;
     
     @RequestMapping(value = "/list")
-	public String list(@ModelAttribute("search") SearchVO search, BoardVO boardvo, Model model) throws Exception {
+	public String list(@ModelAttribute("search") SearchVO search, @ModelAttribute("boardvo") BoardVO boardvo, Model model) throws Exception {
 		
     	/*
     	 * request 파라미터값 받아옴 @ModelAttribute("search") BoardVO search (설정된 값 출력)
+    	 * jsp에서도 search값을 받을수 있음
+    	 * @ModelAttribute("boardvo") BoardVO boardvo 이면,  jsp에서도 boardvo값을 받을수 있음
     	 */
     	/*리스트형 쿼리로 추가필요*/
         List<BoardVO> vo = boardao.listSearch("user00");  /* 내부처리목적 */ 
@@ -111,7 +115,7 @@ public class BoardController {
         System.out.println("title_vo2:" + title2);
         
         model.addAttribute("list", boardao.listSearch(boardvo.getTitle()));
-        model.addAttribute("search", boardvo.getTitle());
+        model.addAttribute("search_title", boardvo.getTitle());
         
         System.out.println("search_test1:" + search.getPage());
         System.out.println("search_test2:" + search.getPageStart());
@@ -133,6 +137,24 @@ public class BoardController {
         System.out.println("pageMaker:" + pageMaker);
                 
         return "/board/list";
+    }
+    
+    @RequestMapping(value = "/read", method = RequestMethod.GET)
+    public String read(@RequestParam("bno") int bno,
+                       @ModelAttribute("criteria") SearchVO criteria, Model model) throws Exception {
+
+    	/*
+    	 * request 파라미터값 받아옴 @ModelAttribute("criteria") SearchVO criteria (설정된 값 출력)
+    	 * jsp에서도 criteria값을 받을수 있음
+    	 */
+        logger.info("================ read() : called ================");
+        logger.info("Get boardVO : " + boardao.read(bno));
+        model.addAttribute(boardao.read(bno));
+        
+        System.out.println("criteria:" + criteria);
+        System.out.println("boardao:" + boardao.read(bno));
+
+        return "/board/read";
     }
 
 }
