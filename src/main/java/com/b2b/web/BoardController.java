@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.b2b.web.dao.BoardDAO;
+import com.b2b.web.dao.MemberDAO;
 import com.b2b.web.model.BoardVO;
+import com.b2b.web.model.MemberVO;
 import com.b2b.web.model.SearchVO;
 import com.b2b.web.model.PageMaker;
 
@@ -29,6 +35,13 @@ public class BoardController {
 
     @Inject
     private BoardDAO boardao;
+    
+    @Inject
+    private MemberDAO memberDAO;
+    
+    /*트렌잭션 처리를 위해 추가*/
+    @Autowired
+    PlatformTransactionManager transactionManager;
     
     @RequestMapping(value = "/list")
 	public String list(@ModelAttribute("search") SearchVO search, @ModelAttribute("boardvo") BoardVO boardvo, Model model) throws Exception {
@@ -149,6 +162,12 @@ public class BoardController {
     	 * request 파라미터값 받아옴 @ModelAttribute("criteria") SearchVO criteria (설정된 값 출력)
     	 * jsp에서도 criteria값을 받을수 있음
     	 */
+    	
+    	int viewcnt = 0;
+    	
+    	/*트렌잭션 처리를 위해 추가*/
+    	TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+    	
     	try //트렌젹션 처리없음 --> 추가필요
     	{   
     		BoardVO vo = boardao.read(bno);  
@@ -156,6 +175,9 @@ public class BoardController {
             
             if(vo == null)
             {
+            	//rollback처리
+            	this.transactionManager.rollback(status);
+
             	System.out.println("size: null");
             	//alert처리 후, history.back()등 처리
             	response.setContentType("text/html; charset=UTF-8");
@@ -165,10 +187,18 @@ public class BoardController {
             }
             else
             {   
-            	//viewcount+1 update처리
+            	viewcnt = vo.getViewcnt() + 1;
             	
-            	//viewcount+1 된 값 set처리 후, 출력
-            	vo.setViewcnt(vo.getViewcnt()+1);            	
+            	BoardVO vo_update = new BoardVO();
+            	vo_update.setBno(bno);
+            	vo_update.setViewcnt(viewcnt);            	
+            	
+            	//viewcount+1 update처리
+            	boardao.update_viewcount(vo_update);
+            	            	
+            	//commit처리
+            	this.transactionManager.commit(status);
+            	vo.setViewcnt(viewcnt);
             	System.out.println("view_printb:" + vo);            	
 	            model.addAttribute(vo);       	
             }
@@ -177,6 +207,9 @@ public class BoardController {
     	}
     	catch(Exception e)
     	{
+    		//rollback처리
+    		this.transactionManager.rollback(status);
+    		
     		 System.out.println("view_printc:");
     		 e.printStackTrace();
     		 response.setContentType("text/html; charset=UTF-8");

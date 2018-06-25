@@ -26,6 +26,12 @@ public interface BoardDAO {
 
 	public BoardVO read(int bno) throws Exception;
 
+	public void update_viewcount(BoardVO vo) throws Exception;
+
+	public void delete(Integer bno) throws Exception;
+	
+	
+
 	
 	 
 

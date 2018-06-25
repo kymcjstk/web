@@ -17,6 +17,19 @@
         WHERE bno = #{bno}
     </select>
     
+    <!--게시글 viewcount 수정-->
+    <update id="update_viewcount">
+        UPDATE tbl_board
+        SET viewcnt = #{viewcnt}
+        WHERE bno = #{bno}
+    </update>
+    
+    <!--게시글 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_board
+        WHERE bno = #{bno}
+    </delete>
+    
     <select id="getTime" resultType="string">
         SELECT NOW()
     </select>

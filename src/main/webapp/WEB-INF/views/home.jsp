@@ -300,25 +300,27 @@ goals: test, install, deploy등..
 user settings: pom.xml등 setting위치
 maven runtime: maven설치버전
 
-read페이지 일부완료 - 6/24
-read내, viewcount update처리 필요
+read페이지(완료) - 6/25
+-- 트랜젝션처리 
+Transaction Manager추가 및 tx 추가 필요.
+소스구문내, TransactionStatus 및 rollback/commit 구문처리 
 
-write페이지 - 6/25
-update페이지 - 6/27
-delete페이지 - 6/29
+write페이지 - 6/26
+update페이지 - 6/28
+delete페이지 - 6/30
  
- 7. 파일 다운로드 /업로드 - 7/01
+ 7. 파일 다운로드 /업로드 - 7/02
  <!--파일 업로드 MultipartResolver 설정-->
  
- 8. 세션 및 로그인 - 7/03
+ 8. 세션 및 로그인 - 7/04
  
- 9. 결제 - 7/07
+ 9. 결제 - 7/08
  
- 10. restful api연동 - 7/12
+ 10. restful api연동 - 7/13
 
 ... response.setContentType("text/html; charset=UTF-8");
                     PrintWriter out = response.getWriter();
-                    out.println("<script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script>");
+                    out.println("<--script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script-->");
                     out.flush();
                     값을 controller에서 불러와 사용하기
 ... classpath 설정변경 및 properties설정 및 사용활용

@@ -53,6 +53,22 @@ public class BoardDAOImpl implements BoardDAO {
          */
     } 
     
+ // 게시글 수정
+    @Override
+    public void update_viewcount(BoardVO vo) throws Exception {
+
+        sqlSession.update(NAMESPACE + ".update_viewcount", vo);
+
+    }
+    
+ // 게시글 삭제
+    @Override
+    public void delete(Integer bno) throws Exception {
+
+        sqlSession.delete(NAMESPACE + ".delete", bno);
+
+    }
+    
 
     
  // 게시글 전체 목록 : 페이징 + 검색
