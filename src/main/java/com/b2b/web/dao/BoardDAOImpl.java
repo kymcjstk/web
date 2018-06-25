@@ -50,8 +50,7 @@ public class BoardDAOImpl implements BoardDAO {
         /*
          *구문확인하여 사용필요 
          *
-         */
-    } 
+         */    } 
     
  // 게시글 수정
     @Override
@@ -61,11 +60,26 @@ public class BoardDAOImpl implements BoardDAO {
 
     }
     
+    @Override
+    public void update(BoardVO vo) throws Exception {
+
+        sqlSession.update(NAMESPACE + ".update", vo);
+
+    }
+    
  // 게시글 삭제
     @Override
-    public void delete(Integer bno) throws Exception {
+    public void delete(int bno) throws Exception {
 
         sqlSession.delete(NAMESPACE + ".delete", bno);
+
+    }
+    
+ // 게시글 입력
+    @Override
+    public void register(BoardVO boardVO) throws Exception {
+
+        sqlSession.insert(NAMESPACE + ".create", boardVO);
 
     }
     

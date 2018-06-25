@@ -30,7 +30,7 @@
     		<c:forEach var="boardVO" varStatus="i" items="${list}">
 	     <tr>
 	         <td>${boardVO.bno}</td>
-	         <td><a href="${path}/board/read?bno=${boardVO.bno}">${boardVO.title}</a></td>
+	         <td><a href="javascript:view(${boardVO.bno})">${boardVO.title}</a></td>
 	         <td>${boardVO.writer}</td>
 	         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardVO.regdate}"/></td>
 	         <td><span class="badge bg-aqua">${boardVO.viewcnt}</span></td>
@@ -106,6 +106,11 @@
         f.action = '${path}/board/list';
         f.submit();
     }
+	
+	function view(_no)
+	{
+		location.href = '${path}/board/read?bno='+_no+'&searchType='+$("#searchType").val();		
+	}
     
 </script>
  1. eq (==)

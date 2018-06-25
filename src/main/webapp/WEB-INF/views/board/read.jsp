@@ -49,10 +49,10 @@
                     <%--이전 목록의 페이지 정보, 검색정보를 가지고 페이지 이동을 위한 값들 세팅--%>
                     <form role="form">
                         <input type="text" name="bno" value="${boardVO.bno}">
-                        <input type="text" name="page" value="${criteria.page}">
-                        <input type="text" name="perPageNum" value="${criteria.perPageNum}">
-                        <input type="text" name="searchType" value="${criteria.searchType}">
-                        <input type="text" name="keyword" value="${criteria.keyword}">
+                        <input type="text" name="page" value="${search.page}">
+                        <input type="text" name="perPageNum" value="${search.perPageNum}">
+                        <input type="text" name="searchType" value="${search.searchType}">
+                        <input type="text" name="keyword" value="${search.keyword}">
                     </form>
 
                     <button type="submit" class="btn btn-warning modBtn">수정</button>
@@ -65,16 +65,8 @@
                
 
             </div>
-
         </section>
-        <%-- /.content --%>
     </div>
-    <%-- /.content-wrapper --%>
-
-    <%--main_footer.jsp--%>
-    <%-- Main Footer --%>
-   
-
 </div>
 <%-- ./wrapper --%>
 
@@ -87,14 +79,14 @@
 
         // 수정버튼 클릭시
         $(".modBtn").on("click", function () {
-           formObj.attr("action", "/board/modify");
+           formObj.attr("action", "${path}/board/modify");
            formObj.attr("method", "get");
            formObj.submit();
         });
 
         // 삭제 버튼 클릭시
         $(".delBtn").on("click", function () {
-            formObj.attr("action", "/board/remove");
+            formObj.attr("action", "${path}/board/remove");
             formObj.attr("method", "post");
             formObj.submit();
         });
@@ -102,7 +94,7 @@
         // 목록 버튼 클릭시
         $(".listBtn").on("click", function () {
             $("input[name=bno]").remove();
-            formObj.attr("action", "/board/list");
+            formObj.attr("action", "${path}/board/list");
             formObj.attr("method", "get");
             formObj.submit();
         });

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.b2b.web.dao.BoardDAO;
 import com.b2b.web.dao.MemberDAO;
@@ -156,7 +157,7 @@ public class BoardController {
     
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("bno") int bno,
-                       @ModelAttribute("criteria") SearchVO criteria, HttpServletResponse response, Model model) throws Exception {
+                       @ModelAttribute("search") SearchVO criteria, HttpServletResponse response, Model model) throws Exception {
 
     	/*
     	 * request 파라미터값 받아옴 @ModelAttribute("criteria") SearchVO criteria (설정된 값 출력)
@@ -195,6 +196,13 @@ public class BoardController {
             	
             	//viewcount+1 update처리
             	boardao.update_viewcount(vo_update);
+            	System.out.println("vo_update1:" + vo_update);    
+
+        		//테스트용 에러발생
+            	//MemberVO vo_3 = memberDAO.readMember("user00");
+            	//System.out.println("readMember:" + vo_3);       
+            	//vo_update.setViewcnt(viewcnt+1);
+            	//boardao.update_viewcount(vo_update);
             	            	
             	//commit처리
             	this.transactionManager.commit(status);
@@ -203,7 +211,8 @@ public class BoardController {
 	            model.addAttribute(vo);       	
             }
             
-	        System.out.println("criteria:" + criteria);	        
+	        System.out.println("criteria:" + criteria);	  
+	        System.out.println("search:" + criteria.getSearchType());	  
     	}
     	catch(Exception e)
     	{
@@ -219,5 +228,78 @@ public class BoardController {
     	}
         return "/board/read";
     }
+    
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registerGET(BoardVO boardVO, Model model) throws Exception {
+
+        return "/board/register";
+    }
+    
+    // 게시글 입력처리
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String registerPOST(BoardVO boardVO) throws Exception {
+
+        logger.info("Inserted BoardVO : " + boardVO);
+        boardao.register(boardVO);
+
+        return "redirect:/board/list";
+    }
+    
+    // 게시글 수정 페이지 : 목록페이지 정보, 검색 정보 유지
+    @RequestMapping(value = "/modify", method = RequestMethod.GET)
+    public String modifyGET(@RequestParam("bno") int bno,
+                            @ModelAttribute("criteria") SearchVO criteria, Model model) throws Exception {
+
+       model.addAttribute("boardVO", boardao.read(bno));
+
+        return "/board/modify";
+    }
+    
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    public String modifyPOST(@ModelAttribute("boardVO") BoardVO boardVO,
+                             @ModelAttribute("criteria") SearchVO criteria,
+                             RedirectAttributes rttr) throws Exception {
+
+        logger.info("================ modifyPOST() : called ================");
+        logger.info("Modified boardVO : " + boardVO);
+        logger.info(criteria.toString());
+        boardao.update(boardVO);
+
+        rttr.addAttribute("bno", boardVO.getBno());
+        rttr.addAttribute("page", criteria.getPage());
+        rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+        rttr.addAttribute("searchType", criteria.getSearchType());
+        rttr.addAttribute("keyword", criteria.getKeyword());
+
+        rttr.addFlashAttribute("msg", "MODIFY");
+        
+        //RedirectAttributes 사용하여, 리다이렉트시...파라미터값 지정 및 값 전송 가능
+
+        logger.info(rttr.toString());
+
+        return "redirect:/board/read";
+
+    }
+    
+ // 게시글 삭제 : 목록페이지 정보, 검색 정보 유지
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public String remove(@RequestParam("bno") int bno,
+                         @ModelAttribute("criteria") SearchVO criteria,
+                         RedirectAttributes rttr) throws Exception {
+
+        logger.info("bno : " + bno);
+       
+        boardao.delete(bno);
+
+        rttr.addAttribute("page", criteria.getPage());
+        rttr.addAttribute("perPageNum", criteria.getPerPageNum());
+        rttr.addAttribute("searchType", criteria.getSearchType());
+        rttr.addAttribute("keyword", criteria.getKeyword());
+
+        rttr.addFlashAttribute("msg", "DELETE");
+
+        return "redirect:/board/list";
+    }
+
 
 }

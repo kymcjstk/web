@@ -305,18 +305,19 @@ read페이지(완료) - 6/25
 Transaction Manager추가 및 tx 추가 필요.
 소스구문내, TransactionStatus 및 rollback/commit 구문처리 
 
-write페이지 - 6/26
-update페이지 - 6/28
-delete페이지 - 6/30
+write페이지 (완료) - 6/25
+update페이지 (완료)- 6/25
+---RedirectAttributes 사용하여, 리다이렉트시...파라미터값 지정 및 값 전송 가능
+delete페이지 (완료) - 6/25
  
- 7. 파일 다운로드 /업로드 - 7/02
+ 7. 파일 다운로드 /업로드 - 6/28
  <!--파일 업로드 MultipartResolver 설정-->
  
- 8. 세션 및 로그인 - 7/04
+ 8. 세션 및 로그인 - 7/02
  
- 9. 결제 - 7/08
+ 9. 결제 - 7/06
  
- 10. restful api연동 - 7/13
+ 10. restful api연동 - 7/11
 
 ... response.setContentType("text/html; charset=UTF-8");
                     PrintWriter out = response.getWriter();

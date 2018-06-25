@@ -24,11 +24,33 @@
         WHERE bno = #{bno}
     </update>
     
+    <!--게시글 수정-->
+    <update id="update">
+        UPDATE tbl_board
+        SET title = #{title}
+            , content = #{content}
+            , writer = #{writer}
+        WHERE bno = #{bno}
+    </update>
+    
     <!--게시글 삭제-->
     <delete id="delete">
         DELETE FROM tbl_board
         WHERE bno = #{bno}
     </delete>
+    
+     <!--게시글 입력-->
+    <insert id="create">
+        INSERT INTO tbl_board (
+            title
+            , content
+            , writer
+        ) VALUES (
+            #{title}
+            , #{content}
+            , #{writer}
+        )
+    </insert>
     
     <select id="getTime" resultType="string">
         SELECT NOW()

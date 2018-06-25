@@ -57,17 +57,22 @@
     <!-- 마이바티스 쿼리로그 출력 끝 -->
     
     <!-- Transaction Manager --> 
+    <!-- 
+    <aop:config>
+    	<aop:pointcut id="txPointcut" expression="execution(* *..MemberDao.*(..))" />
+    	<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
+	 -->    
         <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
     	<property name="dataSource" ref="dataSource" /> 
     </bean> 
     <tx:advice id="txAdvice" transaction-manager="transactionManager"> 
     	<tx:attributes> 
-    		<tx:method name="get*" read-only="true" /> 
-    		<tx:method name="delete*" /> 
+    		<tx:method name="*" rollback-for="Exception"/>
+    		<!-- 모든 메소드에서 Exception이 발생하였을 경우 무조건 롤백 하도록 설정하였다. -->
     	</tx:attributes> 
     </tx:advice>
-
-    	
+    
 	<!-- 해당 package명으로 설정해야 Inject에러 발생안함  -->
     <context:component-scan base-package="com.b2b.web"/>
 
