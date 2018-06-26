@@ -21,9 +21,27 @@ public class ReplyController {
 
     private static final Logger logger = LoggerFactory.getLogger(RestController.class);
 
+    
     @Inject
     private ReplyDAO replydao;
 
+    // 댓글 목록
+    @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
+    public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
+
+        ResponseEntity<List<ReplyVO>> entity = null;
+
+        try {
+            entity = new ResponseEntity<>(replydao.list_Reply(bno), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+    
+    // ResponseEntity : 결과데이터 + HTTP 상태코드를 제어할 수 있는 클래스
     // 댓글 등록
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
@@ -40,59 +58,7 @@ public class ReplyController {
 
         return entity;
     }
-
-    // 댓글 목록
-    @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
-    public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
-
-        ResponseEntity<List<ReplyVO>> entity = null;
-
-        try {
-            entity = new ResponseEntity<>(replydao.list(bno), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return entity;
-    }
-
-    // 댓글 수정
-    @RequestMapping(value = "/{rno}", method = {RequestMethod.PUT, RequestMethod.PATCH})
-    public ResponseEntity<String> update(@PathVariable("rno") Integer rno, @RequestBody ReplyVO replyVO) {
-
-        ResponseEntity<String> entity = null;
-
-        try {
-            replyVO.setRno(rno);
-            replydao.update(replyVO);
-            entity = new ResponseEntity<String>("MODIFIED", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-        }
-
-        return entity;
-    }
-
-
-    // 댓글 삭제
-    @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> delete(@PathVariable("rno") Integer rno) {
-
-        ResponseEntity<String> entity = null;
-
-        try {
-        	replydao.delete(rno);
-            entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-        }
-
-        return entity;
-    }
-
+    
     // 댓글 목록 : 페이징처리
     @RequestMapping(value = "/{bno}/{page}", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("bno") Integer bno,
@@ -105,7 +71,7 @@ public class ReplyController {
             criteria.setPage(page);
 
             Map<String, Object> map = new HashMap<>();
-            List<ReplyVO> list = replydao.listPaging(bno, criteria);
+            List<ReplyVO> list = replydao.list_ReplyPaging(bno, criteria);
             int replyCount = replydao.count(bno);
 
             PageMaker pageMaker = new PageMaker();
@@ -125,6 +91,43 @@ public class ReplyController {
 
         return entity;
     }
+    
+    // 댓글 수정
+    @RequestMapping(value = "/{rno}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    public ResponseEntity<String> update(@PathVariable("rno") Integer rno, @RequestBody ReplyVO replyVO) {
+
+        ResponseEntity<String> entity = null;
+
+        try {
+            replyVO.setRno(rno);
+            replydao.modifyReply(replyVO);
+            entity = new ResponseEntity<String>("MODIFIED", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+
+
+    // 댓글 삭제
+    @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> delete(@PathVariable("rno") Integer rno) {
+
+        ResponseEntity<String> entity = null;
+
+        try {
+        	replydao.removeReply(rno);
+            entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
+
+        return entity;
+    }
+
 
 
 }

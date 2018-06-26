@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class ReplyVO {
 
-    private Integer rno;
-    private Integer bno;
+    private int rno;
+    private int bno;
     private String replytext;
     private String replyer;
     private Date regdate;
     private Date updatedate;
 
-    public Integer getRno() {
+    public int getRno() {
         return rno;
     }
 
@@ -19,7 +19,7 @@ public class ReplyVO {
         this.rno = rno;
     }
 
-    public Integer getBno() {
+    public int getBno() {
         return bno;
     }
 
