@@ -106,7 +106,7 @@ web.xml페이지내 dtd변경
  commit and push = commit
  checkout
  
- git fetch
+git fetch
 git fetch 명령은 로컬 데이터베이스에 있는 것을 뺀 리모트 저장소의 모든 것을 가져온다.
 
 리모트 저장소를 Pull 하거나 Fetch 하기에서 이 명령을 설명하고 리모트 브랜치에 보면 참고할 수 있는 예제가 더 있다.
@@ -309,16 +309,15 @@ update페이지 (완료)- 6/25
 ---RedirectAttributes 사용하여, 리다이렉트시...파라미터값 지정 및 값 전송 가능
 delete페이지 (완료) - 6/25
  
- 7. 댓글기능 (등록/수정/삭제) - 6/26
- 8. aop트렌잭션처리 - 6/28
- 9. 파일 다운로드 /업로드 - 6/30
+ 7. 댓글기능 (등록/수정/삭제) (완료) - 6/26
+ 8. 파일 다운로드 /업로드 - 6/26
  <!--파일 업로드 MultipartResolver 설정-->
  
- 10. 세션 및 로그인 - 7/02
+ 9. 세션 및 로그인 - 6/28
  
- 11. 결제 - 7/06
+ 10. 결제 - 7/02
  
- 12. restful api연동 - 7/11
+ 11. restful api연동 - 7/05
 
 ... response.setContentType("text/html; charset=UTF-8");
                     PrintWriter out = response.getWriter();

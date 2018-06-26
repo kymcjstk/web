@@ -322,11 +322,11 @@
             var replytext = $("#replytext").val();
 
             $.ajax({
-                type: "put",
-                url: "${path}/replies/" + rno,
+                type: "POST",
+                url: "${path}/replies/update/" + rno,
                 headers: {
                     "Content-Type" : "application/json",
-                    "X-HTTP-Method-Override" : "PUT"
+                    "X-HTTP-Method-Override" : "POST"
                 },
                 dataType: "text",
                 data: JSON.stringify({
@@ -349,13 +349,14 @@
             var replytext = $("#replytext").val();
 
             if(confirm("댓글을 삭제하시겠습니까?")) {
+            	alert(rno);
 
                 $.ajax({
-                    type: "delete",
-                    url: "${path}/replies/" + rno,
+                    type: "GET",
+                    url: "${path}/replies/delete/" + rno,
                     headers: {
                         "Content-Type" : "application/json",
-                        "X-HTTP-Method-Override" : "DELETE"
+                        "X-HTTP-Method-Override" : "GET"
                     },
                     dataType: "text",
                     success: function (result) {

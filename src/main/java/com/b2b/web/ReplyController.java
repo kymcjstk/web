@@ -6,8 +6,13 @@ import com.b2b.web.model.ReplyVO;
 import com.b2b.web.dao.ReplyDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -24,6 +29,10 @@ public class ReplyController {
     
     @Inject
     private ReplyDAO replydao;
+    
+    /*트렌잭션 처리를 위해 추가*/
+    @Autowired
+    PlatformTransactionManager transactionManager;
 
     // 댓글 목록
     @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
@@ -46,16 +55,31 @@ public class ReplyController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
 
-        ResponseEntity<String> entity = null;
+    	/*
+    	 * @RequestBody - HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할을 합니다.
+    	 * 현재구조 경우, ReplyVO값을 위해 json형식으로 전달되어여햐 변경없이 입력가능함. 
+    	 */
 
-        try {
+        ResponseEntity<String> entity = null;
+        
+        /*트렌잭션 처리를 위해 추가*/
+    	TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+    	
+    	try {
         	replydao.create(replyVO);
-            entity = new ResponseEntity<String>("INSERTED", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
+        	this.transactionManager.commit(status);
+        	
+	    	HttpHeaders responseHeaders = new HttpHeaders();
+	        responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
+	        entity = new ResponseEntity<String>("INSERTED", responseHeaders, HttpStatus.OK);
+    	} catch (Exception e) {
+    		
+    		this.transactionManager.rollback(status);
+    		
+    		e.printStackTrace();
             entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
+    	
         return entity;
     }
     
@@ -64,6 +88,9 @@ public class ReplyController {
     public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("bno") Integer bno,
                                                           @PathVariable("page") Integer page) {
 
+    	/*
+    	 * @PathVariable("bno") mapping내,  넘겨지는 값을 지정하여 받아옴
+    	 */
         ResponseEntity<Map<String, Object>> entity = null;
 
         try {
@@ -93,8 +120,8 @@ public class ReplyController {
     }
     
     // 댓글 수정
-    @RequestMapping(value = "/{rno}", method = {RequestMethod.PUT, RequestMethod.PATCH})
-    public ResponseEntity<String> update(@PathVariable("rno") Integer rno, @RequestBody ReplyVO replyVO) {
+    @RequestMapping(value = "/update/{rno}", method = {RequestMethod.POST})
+    public ResponseEntity<String> update(@PathVariable("rno") int rno, @RequestBody ReplyVO replyVO) {
 
         ResponseEntity<String> entity = null;
 
@@ -112,7 +139,7 @@ public class ReplyController {
 
 
     // 댓글 삭제
-    @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{rno}", method = RequestMethod.GET)
     public ResponseEntity<String> delete(@PathVariable("rno") Integer rno) {
 
         ResponseEntity<String> entity = null;
