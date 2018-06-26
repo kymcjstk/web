@@ -9,6 +9,7 @@
 	<typeAliases>
         <typeAlias type="com.b2b.web.model.MemberVO" alias="MemberVO"/>
         <typeAlias type="com.b2b.web.model.BoardVO" alias="BoardVO"/>
+        <typeAlias type="com.b2b.web.model.ReplyVO" alias="ReplyVO"/>
     </typeAliases>
 </configuration>
 

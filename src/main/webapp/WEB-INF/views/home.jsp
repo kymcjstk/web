@@ -291,8 +291,7 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
  
  //list, map 입/출력 (1차완료), 추가확인필요
  //다이나믹쿼리 사용 테스트
- <!-- 트랜젝션 처리-->
- 
+  
  maven project 배포등 방법확인 (완료)
  --> run as등에서,  maven (test:테스트, install:  generate-sources 단계부터 compile, test 명령 등을 거쳐 install 명령을 실행한다. , deploy: 통합 또는 릴리스 환경에서 수행되며 최종 패키지를 원격 저장소에 복사하여 다른 개발자 및 프로젝트와 공유)
 base directory --> 해당 프로젝트 선택
@@ -310,14 +309,16 @@ update페이지 (완료)- 6/25
 ---RedirectAttributes 사용하여, 리다이렉트시...파라미터값 지정 및 값 전송 가능
 delete페이지 (완료) - 6/25
  
- 7. 파일 다운로드 /업로드 - 6/28
+ 7. 댓글기능 (등록/수정/삭제) - 6/26
+ 8. aop트렌잭션처리 - 6/28
+ 9. 파일 다운로드 /업로드 - 6/30
  <!--파일 업로드 MultipartResolver 설정-->
  
- 8. 세션 및 로그인 - 7/02
+ 10. 세션 및 로그인 - 7/02
  
- 9. 결제 - 7/06
+ 11. 결제 - 7/06
  
- 10. restful api연동 - 7/11
+ 12. restful api연동 - 7/11
 
 ... response.setContentType("text/html; charset=UTF-8");
                     PrintWriter out = response.getWriter();
