@@ -310,8 +310,10 @@ update페이지 (완료)- 6/25
 delete페이지 (완료) - 6/25
  
  7. 댓글기능 (등록/수정/삭제) (완료) - 6/26
- 8. 파일 다운로드 /업로드 - 6/26
- <!--파일 업로드 MultipartResolver 설정-->
+ 8. 파일 다운로드 /업로드 - 6/27
+ -- multipartResolver 설정 및 uploadPath 설정
+ -- maven내, 이미지리사이즈:imgscalr, 파일업로드라이브러리:commons-fileupload, commons-io
+ -- 업로드관련 util클래스: uploadfileutils.java 와 매핑관련정의 클래스: mediautil.java 추가
  
  9. 세션 및 로그인 - 6/28
  

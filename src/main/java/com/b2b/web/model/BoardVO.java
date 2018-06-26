@@ -12,6 +12,8 @@ public class BoardVO {
     private String writer;
     private Date regdate;
     private int viewcnt;
+    private String[] files;
+    private int attachcnt;
     
     public int getBno() {
 		return bno;
@@ -48,7 +50,21 @@ public class BoardVO {
 	}
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
-	}    
+	}   
+	
+	
+	public String[] getFiles() {
+		return files;
+	}
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
+	public int getAttachcnt() {
+		return attachcnt;
+	}
+	public void setAttachcnt(int attachcnt) {
+		this.attachcnt = attachcnt;
+	}
 	
 	@Override
     public String toString() {
@@ -59,7 +75,9 @@ public class BoardVO {
                 ", writer='" + writer + '\'' +
                 ", regdate=" + regdate +
                 ", viewcnt=" + viewcnt +
-                '}';
+                ", files=" + Arrays.toString(files) +
+                ", attachcnt=" + attachcnt +              
+                '}';              
     }
     
 }

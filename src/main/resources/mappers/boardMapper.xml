@@ -45,10 +45,12 @@
             title
             , content
             , writer
+            , attachcnt
         ) VALUES (
             #{title}
             , #{content}
             , #{writer}
+            , #{attachcnt}
         )
     </insert>
     
