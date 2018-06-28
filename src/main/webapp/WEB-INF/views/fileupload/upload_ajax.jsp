@@ -91,7 +91,7 @@
         formData.append("file", file);
 
         $.ajax({
-            url: "/fileupload/uploadAjax",
+            url: "${path}/fileupload/uploadAjax",
             data: formData,
             dataType: "text",
             processData: false,
@@ -146,7 +146,7 @@
     $(".uploadedList").on("click", "small", function (event) {
         var that = $(this);
         $.ajax({
-            url: "/fileupload/deleteFile",
+            url: "${path}/fileupload/deleteFile",
             type: "post",
             data: {fileName:$(this).attr("data-src")},
             dataType: "text",

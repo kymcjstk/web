@@ -27,7 +27,7 @@
         <%-- Main content --%>
         <section class="content container-fluid">
             <div class="col-lg-12">
-                <form role="form" id="uploadForm" method="post" action="${path}/fileupload/uploadForm" enctype="multipart/form-data" target="imgFrame">
+                <form role="form" id="uploadForm" method="post" action="${path}/fileupload/uploadForm2" enctype="multipart/form-data" target="imgFrame">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">파일 업로드(일반) 입력폼</h3>

@@ -16,13 +16,17 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import sun.nio.ch.IOUtil;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -48,29 +52,69 @@ public class UploadController {
         return "/fileupload/upload_form";
     }
 
-    // 파일 업로드 처리
+    // 파일 업로드 처리 - 단순
     @RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
     public String uploadForm(MultipartFile file, Model model) throws Exception {
         logger.info("==================== FILE UPLOAD ===========================");
+        logger.info("original file : " + file);
         logger.info("original file name : " + file.getOriginalFilename());
         logger.info("file size : " + file.getSize());
         logger.info("contentType : " + file.getContentType());
         logger.info("============================================================");
-        String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
+        //String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
+        //model.addAttribute("savedName", savedName);
+        return "/fileupload/upload_result";
+    }
+    
+    // 파일 업로드 처리 - 다중
+    @RequestMapping(value = "/uploadForm2", method = RequestMethod.POST)
+    public String uploadForm(MultipartHttpServletRequest file, Model model) throws Exception {
+    	
+    	MultipartFile mf_1 = file.getFile("file"); //단일 일경우...
+    	List<MultipartFile> fileList = file.getFiles("file");
+    	String savedName = "";
+    	
+        for (MultipartFile mf : fileList) {
+            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+            long fileSize = mf.getSize(); // 파일 사이즈
+
+            System.out.println("originFileName : " + originFileName);
+            System.out.println("fileSize : " + fileSize);
+            
+            try {
+            	savedName = uploadFile(mf.getOriginalFilename(), mf.getBytes());
+            	//safeFile = 저장폴더+저장파일명
+                //mf.transferTo(new File(safeFile));
+            	//아래와 같은 사항으로 처리가능함
+                //FileCopyUtils.copy(byte[] fileData, new File(safeFile));
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         model.addAttribute("savedName", savedName);
         return "/fileupload/upload_result";
     }
 
+
     // 파일 업로드 처리 메서드
     private String uploadFile(String originalFileName, byte[] fileData) throws Exception {
-        // 고유한 파일명을 위해 UUID 키 값 생성
+        
+    	// 고유한 파일명을 위해 UUID 키 값 생성
         UUID uuid = UUID.randomUUID();
+        
         // UUID + _ + 원본파일명
         String savedName = uuid.toString() + "_" + originalFileName;
+        
         // 업로드 경로, 파일명 : 파일 객체 생성
-        File target = new File(uploadPath, savedName);
+        File target = new File(uploadPath, savedName);        
         // 파일을 경로에 전송
         FileCopyUtils.copy(fileData, target);
+        
         return savedName;
     }
 
@@ -81,6 +125,7 @@ public class UploadController {
     }
 
     // 파일 업로드 처리 Ajax 방식 : UploadFileUtils 클래스 사용
+    // ResponseEntity : 결과데이터 + HTTP 상태코드를 제어할 수 있는 클래스
     @ResponseBody
     @RequestMapping(value = "/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public ResponseEntity<String> uploadAjaxPOST(MultipartFile file) throws Exception {
@@ -96,7 +141,8 @@ public class UploadController {
     @ResponseBody
     @RequestMapping("/displayFile")
     public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-        // InputStream : 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는 기능관련 클래스
+    
+    	// InputStream : 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는 기능관련 클래스
         InputStream inputStream = null;
         ResponseEntity<byte[]> entity = null;
         logger.info("file name : " + fileName);
@@ -105,8 +151,10 @@ public class UploadController {
             String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
             // 이미지 파일 여부 확인, 이미지 파일일 경우 이미지 MINEType 지정
             MediaType mediaType = MediaUtils.getMediaType(formatName);
+            
             // HttpHeaders 객체 생성
             HttpHeaders httpHeaders = new HttpHeaders();
+            
             // 실제 경로의 파일을 읽어들이고 InputStream 객체 생성
             inputStream = new FileInputStream(uploadPath + fileName);
             // 이미지 파일일 경우
@@ -116,6 +164,7 @@ public class UploadController {
             } else {
                 // 디렉토리 + UUID 제거
                 fileName = fileName.substring(fileName.indexOf("_") + 1);
+                
                 // 다운로드 MIME Type 지정
                 httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
                 // 한글이름의 파일 인코딩처리
@@ -137,6 +186,7 @@ public class UploadController {
     @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
     public ResponseEntity<String> deleteFile(String fileName) throws Exception {
         logger.info("delete file : " + fileName);
+        
         // 파일 삭제
         removeFile(fileName);
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
@@ -167,19 +217,22 @@ public class UploadController {
             return new ResponseEntity<>("DELETED", HttpStatus.OK);
         }
         // 파일이 존재할 경우 반복문 수행
-        for (String fileName : files) {
+        for (String file : files) {
             // 파일 삭제
-            removeFile(fileName);
+            removeFile(file);
         }
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
     }
 
     // 파일 삭제 메서드
     private void removeFile(String fileName) {
-        // 파일 확장자 추출
+        
+    	// 파일 확장자 추출
         String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+        
         // 파일 확장자를 통해 이미지 파일인지 판별
         MediaType mediaType = MediaUtils.getMediaType(formatName);
+        
         // 이미지 파일일 경우, 원본파일 삭제
         if (mediaType != null) {
             // 원본 이미지의 경로 + 파일명 추출
