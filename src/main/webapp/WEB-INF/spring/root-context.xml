@@ -24,11 +24,21 @@
         <!--<property name="password" value="qazwsxdc8375!"/>-->
     <!--</bean>-->    
     
+    <!-- 
     <bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/world?useUnicode=yes&amp;characterEncoding=UTF-8"/>
         <property name="username" value="root"/>
         <property name="password" value="7599"/>
+    </bean> 
+     -->
+     
+    <bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+        <property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/world?useUnicode=yes&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <!-- properties 불러온 값을 지정 -->
+        <property name="password" value="${jdk.password}"/>
     </bean> 
     
     <!-- SqlSessionFactoryBean 생성 -->
@@ -85,5 +95,11 @@
         <constructor-arg value="C:\Users\kym\git\web\src\main\webapp\resources\dist\upload_files">
         </constructor-arg>
     </bean>
+    
+    <!-- properties 불러오기  classpath에 지정한 사항 불러옴 ( 설정-> java bulid path -> source ->추가/수정 )-->
+    <!-- 
+    <context:property-placeholder location="/WEB-INF/*.properties" /> 
+     -->
+    <context:property-placeholder location="classpath:application.properties" />
         
 </beans>

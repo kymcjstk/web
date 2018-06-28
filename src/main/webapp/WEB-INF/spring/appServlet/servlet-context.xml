@@ -36,4 +36,24 @@
         <beans:property name="maxUploadSize" value="10485760"/>
     </beans:bean>
     
+    <!--로그인 처리 Interceptor 설정-->
+    <beans:bean id="loginInterceptor" class="com.b2b.web.commons.interceptor.LoginInterceptor"/>
+    
+    <!--로그인상태 Interceptor 설정-->
+    <beans:bean id="authInterceptor" class="com.b2b.web.commons.interceptor.AuthInterceptor"/>
+        
+    <interceptors>
+    	<!-- 로그인처리페이지 이후에 처리 -->
+        <interceptor>
+            <mapping path="/user/loginPost"/>
+            <beans:ref bean="loginInterceptor"/>
+        </interceptor>
+        <!-- 로그인체크  처리 -->
+        <interceptor>
+            <mapping path="/user/profile"/>
+            <mapping path="/fileupload/uploadForm"/>
+            <beans:ref bean="authInterceptor"/>
+        </interceptor>
+    </interceptors>
+    
 </beans:beans>

@@ -315,11 +315,14 @@ delete페이지 (완료) - 6/25
  -- maven내, 이미지리사이즈:imgscalr, 파일업로드라이브러리:commons-fileupload, commons-io
  -- 업로드관련 util클래스: uploadfileutils.java 와 매핑관련정의 클래스: mediautil.java 추가
  
- 9. 세션 및 로그인 - 7/01
+ 9. 세션 및 로그인 /인터셉터/프로퍼티 (완료)- 6/28
+ --- password 암호호처리를 위해 라이브러리  jackson-databind 추가
+ --- 인터셉터 설정: servlet-context.xml내, bean 과 interceptor 지정
+ --- properties 설정(root-context.xml) 및 해당내부 호출사용, java파일내,  파일불러와서 properties로 지정하여, 설정값 사용예(Authinterceptor.java)
  
- 10. 결제 - 7/04
+ 10. 결제 - 7/02
  
- 11. restful api연동 - 7/09
+ 11. restful api연동 - 7/07
 
 ... response.setContentType("text/html; charset=UTF-8");
                     PrintWriter out = response.getWriter();
