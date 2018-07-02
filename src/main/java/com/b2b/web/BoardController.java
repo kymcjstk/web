@@ -138,6 +138,14 @@ public class BoardController {
         System.out.println("search_test3:" + search.getPerPageNum());
         //쿼리 필요한 값들은 넘겨진값 과 이를 통한 Criteria.java에서 구해져선 반환됨
         
+        System.out.println("검색값:"+search.getKeyword());
+        if(search.getKeyword() != null )
+        {
+        	search.setKeyword(search.getKeyword().toLowerCase());  //검색값을 소문자로 변경처리
+        }
+        
+        System.out.println("검색변경값:"+search.getKeyword());
+        
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(search); //값을 pageMaker입력 - search 값이 criteria 로 지정됨
         
@@ -181,10 +189,13 @@ public class BoardController {
 
             	System.out.println("size: null");
             	//alert처리 후, history.back()등 처리
-            	response.setContentType("text/html; charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("<script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script>");
-                out.flush();
+            	
+            	com.b2b.web.commons.MediaUtils.print_historyback(response);  //외부에 확장하여 불러올수 있음
+            	
+            	//response.setContentType("text/html; charset=UTF-8");
+                //PrintWriter out = response.getWriter();
+                //out.println("<script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script>");
+                //out.flush();
             }
             else
             {   

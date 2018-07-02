@@ -122,14 +122,14 @@ public class UserController {
     	//System.out.println("session:"+ object);
     	
         // 아이디 비번 일치 확인
-        //UserVO userVO = userdao.login(loginDTO);
+        UserVO userVO = userdao.login(loginDTO);
         
         // 불일치할 경우
-        //if (userVO == null || !BCrypt.checkpw(loginDTO.getUpw(), userVO.getUpw())) {
-        //    return;
-        //}
+        if (userVO == null || !BCrypt.checkpw(loginDTO.getUpw(), userVO.getUpw())) {
+            return;
+        }
         // 일치할 경우
-        //model.addAttribute("userVO", userVO);
+        model.addAttribute("userVO", userVO);
         
         // 로그인 유지를 선택한 경우
         //if (loginDTO.isUseCookie()) {

@@ -21,6 +21,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
+
+
+/*
+@PropertySources({
+	@PropertySource(value = "classpath:config/application.properties"),
+	//물리 위치에서 파일을 찾을 경우
+	@PropertySource("file:src/main/webapp/WEB-INF/spring/application.properties")
+})
+*/
+@Configuration
+@PropertySource(value = { "classpath:/config/application.properties"})
+
+
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
@@ -28,13 +46,32 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Inject
     private UserDAO userdao;
     
+    @Autowired
+    private Environment env;
+    
+    @Component
+    public class BeanTester {
+        @Autowired Environment environment; 
+        public void execute(){
+            String attr = this.environment.getProperty("app.domain");
+            
+            System.out.println("attr : "+attr);
+        }
+    }
+    
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
         
     	HttpSession session = request.getSession();
-         
+        
+    	System.out.println("url3 : "+env);
+
+    	System.out.println("url2 : "+env.getProperty("app.domain"));
+    	
+    	System.out.println("url4 : "+System.getProperty("user.dir"));
+
         String propPath = System.getProperty("user.dir") + File.separator + "application.properties";
         Properties props = new Properties();
         props.load(new FileReader(propPath));

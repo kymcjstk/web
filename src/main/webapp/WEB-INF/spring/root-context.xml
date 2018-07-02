@@ -100,6 +100,6 @@
     <!-- 
     <context:property-placeholder location="/WEB-INF/*.properties" /> 
      -->
-    <context:property-placeholder location="classpath:application.properties" />
+    <context:property-placeholder location="classpath:config/application.properties" />
         
 </beans>

@@ -290,6 +290,7 @@ DAO인터페이스 구현하는 DAO 클래스 작성 - SqlSessionTemplate 이용
  6. 게시판 개발 및 인크루드등 기본 구문 사용  - 6/29
  
  //list, map 입/출력 (1차완료), 추가확인필요
+ //검색값비교시, 대소문자변경 과 db쿼리내 변경처리
  //다이나믹쿼리 사용 테스트
   
  maven project 배포등 방법확인 (완료)
@@ -320,25 +321,41 @@ delete페이지 (완료) - 6/25
  --- 인터셉터 설정: servlet-context.xml내, bean 과 interceptor 지정
  --- properties 설정(root-context.xml) 및 해당내부 호출사용, java파일내,  파일불러와서 properties로 지정하여, 설정값 사용예(Authinterceptor.java)
  
- 10. 결제 - 7/02
+ 10. 결제 (완료)
+ - 이니시스모듈 설치연동
+ - pom.xml에, xalan, httpclient, inipay 추가
+ - 테스트jar를 위하여, 로컬jar를 maven reoisitory설정가능
+ ex)${basedir}/lib/INIpaySample_v1.3_jdk1.5.jar에 파일을 maven 설정 --> 
+ <dependency>
+     <groupId>com.inicis.inipaystd</groupId>
+     <artifactId>INIpaystd</artifactId>
+     <version>1.3</version>
+     <systemPath>${basedir}/lib/INIpaySample_v1.3_jdk1.5.jar</systemPath>
+ </dependency>
+         
+ - 위변조방지관련 class인,  SignatureUtil를 추가... 수동으로 com.b2b.inipay.utll.SignatureUtil 생성하여 사용가능
+ - 추가로  httpclient등 util 수동추가가능
+ -- request페이지를 통해 결제요청 --> 결제진행 --> 결제결과받기(return페이지) --> 위변조 및 2차결제(api전송 및 전달) --> try catch로 전송값등으로  성공 및 위변조등 내부처리값 성공시  주문/결제에 대한 데이터저장처리
+ --> 에러발생시,  자동취소페이지실행
  
- 11. restful api연동 - 7/07
 
-... response.setContentType("text/html; charset=UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.println("<--script>alert('해당 게시물이 존재하지 않습니다.'); history.go(-1);</script-->");
-                    out.flush();
-                    값을 controller에서 불러와 사용하기
-... classpath 설정변경 및 properties설정 및 사용활용
-... git update(pull)관련 사용방법 확인
-... 배포 및 젠킨스 설정/활용
-... x플랫폼, 넥사크로 설치사용
-... srping boot 이용 + radis등 캐쉬
-... 엥귤러 및 nodejs/리엑트js 사용/활용
+ 11. lombok 사용하여 getter/setter관련 적용 및 이외 기능활용  - 7/4
+
+ 12. 젠킨스 설정/활용 과 git/svn연동 배포  - 7/7
+ 
+ 13. restful api연동 - 7/14
+
+ 14. Native영역과 REST 통신 - 7/14
+
+ 15. srping boot 이용 + radis등 캐쉬 - 7/14
+
+ 16. x플랫폼, 넥사크로 설치사용 - 7/14
+
+ 17. spring security을 통한 로그인/로그아웃 구현 - 7/14
+
+ 18. 엥귤러 및 nodejs/리엑트js 사용/활용 - 7/14
+
 ... velocity, postgresql, graddle 사용
-... lombok 사용하여 getter/setter관련 적용 및 이외 기능활용
-... spring security을 통한 로그인/로그아웃 구현
-... Native 영역과 REST 통신
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>
