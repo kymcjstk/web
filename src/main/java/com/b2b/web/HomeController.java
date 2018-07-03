@@ -30,10 +30,11 @@ import com.b2b.web.model.MemberVO;
  * import com.b2b.inipay.utll.SignatureUtil;
 */
 /*import com.inicis.util.HTTPUtil;*/
+/*
 import com.inicis.std.util.HttpUtil;
 import com.inicis.std.util.ParseUtil;
 import com.inicis.std.util.SignatureUtil;
-
+*/
 import com.b2b.web.model.lombokTest;
 
 /**
@@ -203,9 +204,9 @@ public class HomeController {
 				String mid 		= paramMap.get("mid");					        // 가맹점 ID 수신 받은 데이터로 설정
 				
 				String signKey	= "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 가맹점에 제공된 키(이니라이트키) (가맹점 수정후 고정) !!!절대!! 전문 데이터로 설정금지
-				
+				/*
 				String timestamp= SignatureUtil.getTimestamp();			  // util에 의해서 자동생성
-
+				*/
 				String charset 	= "UTF-8";								            // 리턴형식[UTF-8,EUC-KR](가맹점 수정후 고정)
 				
 				String format 	= "JSON";								              // 리턴형식[XML,JSON,NVP](가맹점 수정후 고정)
@@ -226,10 +227,10 @@ public class HomeController {
 				Map<String, String> signParam = new HashMap<String, String>();
 
 				signParam.put("authToken",	authToken);		// 필수
-				signParam.put("timestamp",	timestamp);		// 필수
+				/* signParam.put("timestamp",	timestamp);	*/  // 필수
 
 				// signature 데이터 생성 (모듈에서 자동으로 signParam을 알파벳 순으로 정렬후 NVP 방식으로 나열해 hash)
-				String signature = SignatureUtil.makeSignature(signParam);
+				/* String signature = SignatureUtil.makeSignature(signParam); */
 
 	      String price = "";  // 가맹점에서 최종 결제 가격 표기 (필수입력아님)
 	      		
@@ -243,15 +244,15 @@ public class HomeController {
 
 				authMap.put("mid"			    ,mid);			  // 필수
 				authMap.put("authToken"		,authToken);	// 필수
-				authMap.put("signature"		,signature);	// 필수
-				authMap.put("timestamp"		,timestamp);	// 필수
+				/* authMap.put("signature"		,signature); */	// 필수
+				/* authMap.put("timestamp"		,timestamp); */	// 필수
 				authMap.put("charset"		  ,charset);		// default=UTF-8
 				authMap.put("format"		  ,format);		  // default=XML
 	      //authMap.put("price" 		,price);		    // 가격위변조체크기능 (선택사용)
 	      
 				System.out.println("##승인요청 API 요청##");
 
-				HttpUtil httpUtil = new HttpUtil();
+				/* HttpUtil httpUtil = new HttpUtil();  */
 				//HttpClient httpUtil = new HttpClient();
 				
 				System.out.println("##승인요청 API 요청2##");
@@ -264,7 +265,7 @@ public class HomeController {
 					String authResultString = "";
 					
 					/*authResultString = httpUtil.executeAsString(authUrl, authMap);*/
-					authResultString = httpUtil.processHTTP(authMap, authUrl);
+					/* authResultString = httpUtil.processHTTP(authMap, authUrl); */
 					
 					//############################################################
 					//5.API 통신결과 처리(***가맹점 개발수정***)
@@ -277,7 +278,7 @@ public class HomeController {
 					
 					Map<String, String> resultMap = new HashMap<String, String>();
 					
-					resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
+					/* resultMap = ParseUtil.parseStringToMap(test); */ //문자열을 MAP형식으로 파싱
 									
 					System.out.println("resultMap == " + resultMap);
 					System.out.println("<pre>");
@@ -286,22 +287,22 @@ public class HomeController {
 					/*************************  결제보안 강화 2016-05-18 START ****************************/ 
 					Map<String , String> secureMap = new HashMap<String, String>();
 					secureMap.put("mid"			, mid);								//mid
-					secureMap.put("tstamp"		, timestamp);						//timestemp
+					/* secureMap.put("tstamp"		, timestamp);			*/			//timestemp
 					secureMap.put("MOID"		, resultMap.get("MOID"));			//MOID
 					secureMap.put("TotPrice"	, resultMap.get("TotPrice"));		//TotPrice
 					
 					// signature 데이터 생성 
-					String secureSignature = SignatureUtil.makeSignatureAuth(secureMap);
+					/* String secureSignature = SignatureUtil.makeSignatureAuth(secureMap);  */
 					/*************************  결제보안 강화 2016-05-18 END ****************************/
 
-					if("0000".equals(resultMap.get("resultCode")) && secureSignature.equals(resultMap.get("authSignature")) ){	//결제보안 강화 2016-05-18
+					/* if("0000".equals(resultMap.get("resultCode")) && secureSignature.equals(resultMap.get("authSignature")) ){ 	//결제보안 강화 2016-05-18
 					   /*****************************************************************************
 				       * 여기에 가맹점 내부 DB에 결제 결과를 반영하는 관련 프로그램 코드를 구현한다.  
 					   
 						 [중요!] 승인내용에 이상이 없음을 확인한 뒤 가맹점 DB에 해당건이 정상처리 되었음을 반영함
 								  처리중 에러 발생시 망취소를 한다.
 				       ******************************************************************************/	
-						
+				/*		
 						System.out.println("<tr><th class='td01'><p>거래 성공 여부</p></th>");
 						System.out.println("<td class='td02'><p>성공</p></td></tr>");
 						
@@ -704,6 +705,9 @@ public class HomeController {
 							System.out.println("<td class='td02'><p>" +resultMap.get("UPNT_PayPrice")+ "</p></td></tr>");
 						}
 				    }
+				    
+				    */
+					
 					System.out.println("</table>");
 					System.out.println("<span style='padding-left : 100px;'>");
 					System.out.println("</span>");
@@ -734,13 +738,13 @@ public class HomeController {
 					//#####################
 					
 					/*String netcancelResultString = httpUtil.executeAsString(netCancel, authMap);*/	// 망취소 요청 API url(고정, 임의 세팅 금지)
-					String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)
+					/* String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	 */ // 망취소 요청 API url(고정, 임의 세팅 금지)
 					
 					
 					System.out.println("## 망취소 API 결과 ##");
 
 					// 취소 결과 확인
-					System.out.println("<p>"+netcancelResultString.replaceAll("<", "&lt;").replaceAll(">", "&gt;")+"</p>");
+					/* System.out.println("<p>"+netcancelResultString.replaceAll("<", "&lt;").replaceAll(">", "&gt;")+"</p>"); */
 				}
 
 			}else{
