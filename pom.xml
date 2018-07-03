@@ -119,6 +119,7 @@
 		</dependency>
 
 		<!-- 이니시스 이니페이 (log4j, xalan, httpclient 3.0) -->
+        <!-- 
         <dependency>
             <groupId>com.inicis.inipay</groupId>
             <artifactId>INIpay</artifactId>
@@ -137,7 +138,7 @@
             <artifactId>ExecureCrypto</artifactId>
             <version>1.0</version>
         </dependency>
-        
+         -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
