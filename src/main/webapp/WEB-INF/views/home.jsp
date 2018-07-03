@@ -344,6 +344,44 @@ delete페이지 (완료) - 6/25
  -- getter,setter,tostring,data등과 log기능 사용확인함
 
  12. 젠킨스 설정/활용 과 git/svn연동 배포  - 7/5
+ -- 젠킨스 설치
+ tomcat설치 후, conf/tomcat-user.xml 파일에, 
+ <role rolename="manager-gui"/>
+ <role rolename="manager-script"/>
+ <role rolename="manager-jmx"/>
+ <role rolename="manager-status"/>
+ <role rolename="admin-gui"/>
+ <role rolename="admin-script"/>
+ <user username="admin" password="admin" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+ 추가 후, 젠킨스다운로드 (LTS부분에서 Generic Java package(.war)파일을 톰캣의 webapps폴더에 다운로드 -->톰캣을 실행후 localhost:8080/jenkins를 실행) 계정비번복사 후
+ C:\Windows\System32\config\systemprofile\.jenkins\secrets,
+ 계정생성 후 로그인 --> 메뉴안보이거나 문제있을시, 삭제후 재설치하면 보임
+ --> 각 git/svn등에서, 젠킨스가 연결할 수 있도록 권한설정이 필요함: github경우... setting-developer sttings -> personal access tonkens --> generat new token클릭한 후
+ repo, admin:repo_hook 메뮤 체크 후, token 설명에 "for jenkins" 입력후, 클릭 토큰발급 (8ca19f2f48a5756b0b07b8b2292e911e9c29d4b3)
+--> jenkins관리 - Global tool configuration에서,  
+jdk에, name - jdk1.8.0_144, JAVA_HOME - C:\Program Files\Java\jdk1.8.0_144 입력 후 install..체크해제
+Maven도 설정(name - apache-maven-3.3.9, MAVEN_HOME - D:\apache-maven-3.3.9)
+jenkins관리 - 시스템설정에서, github에,  add github server추가 (id와 발급한 토큰값 입력 후, kind는 secret text임. 테스트연결시.. Credentials verified for user [본인Github이름], rate limit: 4998 이런식으로 나오면 성공)
+git.exe (다운로드 설치 후,  git경로지정:C:\Program Files\Git\bin\git.exe)
+gradle다운로드 (다운로드 설치 후,  gradle경로지정:D:\gradle-4.8.1)
+플러그인설치에서, 배포를 위해, Deploy to contrainer설치 함, gradle 설치
+새프로젝트 생성 - 새로운item생성 - (freestyle porject생성)
+--> general에서,  github project-project url:경로지정(https://github.com/kymcjstk/web.git/)
+소스코드관리 - git url: https://github.com/kymcjstk/web.git, add credentials id/password로 설정하여 입력 후 지정,
+build에서,  Invoke top-level Maven target - maven으로 선택한 후, 버전선택 후.. goals에 clean package tomcat:redeploy -P production -D maven.test.skip=true 입력하고 완료
+이후 확인필요:build - invoke gradle script에서, gradle선택 후,  taskes에 clean 과 bulid입력
+
+tomcat:redeploy
+톰캣 매니저( Tomcat manager )와 통신해서 war파일을 deploy 하겠다는 의미입니다.
+
+-P production
+뒤에서 pom.xml 파일에 <profile>을 작성할 것인데, 이 설정은 <id>가 production인 <profile>설정 그대로를 컴파일 하라는 의미입니다.
+윈도우 환경의 이클립스에서 톰캣의 Servlet은 런타임 환경에서 자동으로 classpath에 잡히지만, 리눅스에서는 이클립스를 사용하지 않기 때문에 <profile>설정을 해줘야 합니다.
+( 그동안 이클립스에서 maven으로 build를 하지 않기 때문에, pom.xml 파일에서 <profile>을 설정하지 않았습니다. )
+
+-D maven.test.skip=true
+테스트를 생략하겠다는 설정입니다.
+
  
  13. restful api연동 - 7/12
 
