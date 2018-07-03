@@ -311,6 +311,8 @@
 			        <compilerArgument>-Xlint:all</compilerArgument>
 			        <showWarnings>true</showWarnings>
 			        <showDeprecation>true</showDeprecation>
+			        <!-- bulid ms949 error -->
+			        <encoding>UTF-8</encoding>
 			    </configuration>
 			</plugin>
             <plugin>
