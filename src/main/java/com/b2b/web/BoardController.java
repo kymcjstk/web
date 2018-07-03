@@ -26,14 +26,19 @@ import com.b2b.web.dao.MemberDAO;
 import com.b2b.web.model.BoardVO;
 import com.b2b.web.model.MemberVO;
 import com.b2b.web.model.SearchVO;
+
+import lombok.extern.log4j.Log4j;
+
 import com.b2b.web.model.PageMaker;
 
+@Log4j  /* lombok을 이용한 로그출력설정*/
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
+	
     @Inject
     private BoardDAO boardao;
     
@@ -47,6 +52,7 @@ public class BoardController {
     @RequestMapping(value = "/list")
 	public String list(@ModelAttribute("search") SearchVO search, @ModelAttribute("boardvo") BoardVO boardvo, Model model) throws Exception {
 		
+    	log.info(""); /* lombok을 이용한 로그출력사용가능*/
     	/*
     	 * request 파라미터값 받아옴 @ModelAttribute("search") BoardVO search (설정된 값 출력)
     	 * jsp에서도 search값을 받을수 있음

@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 })
 */
 @Configuration
-@PropertySource(value = { "classpath:/config/application.properties"})
+@PropertySource(value = { "classpath:application.properties"})
 
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {

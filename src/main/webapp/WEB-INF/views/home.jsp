@@ -339,21 +339,23 @@ delete페이지 (완료) - 6/25
  --> 에러발생시,  자동취소페이지실행
  
 
- 11. lombok 사용하여 getter/setter관련 적용 및 이외 기능활용  - 7/4
+ 11. lombok 사용하여 getter/setter관련 적용 및 이외 기능활용  (완료) - 7/3
+ -- @Builder 제외한 기본사용 확인 (lombokTest.java와 homecontroller, boardcontroller 테스팅)
+ -- getter,setter,tostring,data등과 log기능 사용확인함
 
- 12. 젠킨스 설정/활용 과 git/svn연동 배포  - 7/7
+ 12. 젠킨스 설정/활용 과 git/svn연동 배포  - 7/5
  
- 13. restful api연동 - 7/14
+ 13. restful api연동 - 7/12
 
- 14. Native영역과 REST 통신 - 7/14
+ 14. Native영역과 REST 통신 - 7/18
 
- 15. srping boot 이용 + radis등 캐쉬 - 7/14
+ 15. srping boot 이용 + radis등 캐쉬 - 7/31
 
- 16. x플랫폼, 넥사크로 설치사용 - 7/14
+ 16. x플랫폼, 넥사크로 설치사용 - 8/19
 
- 17. spring security을 통한 로그인/로그아웃 구현 - 7/14
+ 17. spring security을 통한 로그인/로그아웃 구현 - 8/27
 
- 18. 엥귤러 및 nodejs/리엑트js 사용/활용 - 7/14
+ 18. 엥귤러 및 nodejs/리엑트js 사용/활용 - 9/19
 
 ... velocity, postgresql, graddle 사용
 

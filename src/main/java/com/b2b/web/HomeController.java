@@ -34,6 +34,8 @@ import com.inicis.std.util.HttpUtil;
 import com.inicis.std.util.ParseUtil;
 import com.inicis.std.util.SignatureUtil;
 
+import com.b2b.web.model.lombokTest;
+
 /**
  * Handles requests for the application home page.
  */
@@ -81,6 +83,10 @@ public class HomeController {
         model.addAttribute(vo);
         model.addAttribute("vo", vo);
         
+        lombokTest user = new lombokTest();
+        user.setId(1);
+        
+        
         return "test2";
     }
 		
@@ -88,9 +94,11 @@ public class HomeController {
 	public String doD2(Model model) throws Exception {
 		System.out.println(memberDAO.getTime());
 		
-		MemberVO vo = memberDAO.readWithPW("user00", "user00");
+		MemberVO vo = memberDAO.readWithPW("1", "2");
         logger.info("test2 : " + vo);
         System.out.println("dd2" + vo);
+        System.out.println("dd2" + vo.toString());
+        System.out.println("getUserid:" + vo.getUserid());
         model.addAttribute(vo);
         model.addAttribute("vo", vo);
         
