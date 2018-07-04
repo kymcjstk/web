@@ -6,9 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-
+/*
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -32,11 +33,12 @@ import lombok.extern.log4j.Log4j;
 import com.b2b.web.model.PageMaker;
 
 @Log4j  /* lombok을 이용한 로그출력설정*/
+
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	/*private static final Logger logger = LoggerFactory.getLogger(BoardController.class);*/
 
 	
     @Inject
@@ -256,7 +258,7 @@ public class BoardController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerPOST(BoardVO boardVO) throws Exception {
 
-        logger.info("Inserted BoardVO : " + boardVO);
+        /*logger.info("Inserted BoardVO : " + boardVO);*/
         boardao.register(boardVO);
 
         return "redirect:/board/list";
@@ -277,9 +279,9 @@ public class BoardController {
                              @ModelAttribute("criteria") SearchVO criteria,
                              RedirectAttributes rttr) throws Exception {
 
-        logger.info("================ modifyPOST() : called ================");
+        /*logger.info("================ modifyPOST() : called ================");
         logger.info("Modified boardVO : " + boardVO);
-        logger.info(criteria.toString());
+        logger.info(criteria.toString());*/
         boardao.update(boardVO);
 
         rttr.addAttribute("bno", boardVO.getBno());
@@ -292,7 +294,7 @@ public class BoardController {
         
         //RedirectAttributes 사용하여, 리다이렉트시...파라미터값 지정 및 값 전송 가능
 
-        logger.info(rttr.toString());
+        /*logger.info(rttr.toString());*/
 
         return "redirect:/board/read";
 
@@ -304,7 +306,7 @@ public class BoardController {
                          @ModelAttribute("criteria") SearchVO criteria,
                          RedirectAttributes rttr) throws Exception {
 
-        logger.info("bno : " + bno);
+        /*logger.info("bno : " + bno);*/
        
         boardao.delete(bno);
 
