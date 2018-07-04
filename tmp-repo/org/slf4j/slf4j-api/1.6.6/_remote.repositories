@@ -1,6 +1,5 @@
 #NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
-#Mon Jul 02 10:15:35 KST 2018
-slf4j-api-1.6.6-javadoc.jar>central=
-slf4j-api-1.6.6.pom>central=
-slf4j-api-1.6.6.jar>central=
-slf4j-api-1.6.6-sources.jar>central=
+#Wed Jul 04 14:55:53 KST 2018
+slf4j-api-1.6.6.jar>local-repo=
+slf4j-api-1.6.6-sources.jar>local-repo=
+slf4j-api-1.6.6.pom>local-repo=
