@@ -134,8 +134,7 @@
             <systemPath>${basedir}/lib/INIpaySample_v1.3_jdk1.5.jar</systemPath>
         </dependency>
          -->
-        
-        <!-- 
+         
         <dependency>
             <groupId>com.inicis.inipaystd</groupId>
             <artifactId>INIpaystd</artifactId>
@@ -153,7 +152,7 @@
             <artifactId>xalan</artifactId>
             <version>2.6.0</version>
         </dependency>
-         -->
+        
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
