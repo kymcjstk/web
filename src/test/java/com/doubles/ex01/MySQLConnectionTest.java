@@ -1,5 +1,5 @@
 package com.doubles.ex01;
-
+/*
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -25,3 +25,4 @@ public class MySQLConnectionTest {
         }
     }
 }
+*/

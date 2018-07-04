@@ -1,5 +1,6 @@
 package com.doubles.ex01;
 
+/*
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
@@ -30,3 +31,4 @@ public class MyBatisTest {
         }
     }
 }
+*/
