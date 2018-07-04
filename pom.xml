@@ -344,15 +344,17 @@
         </plugins>
     </build>
     
+    <!-- local 저장소설정으로 maven서버로 jar파일 전체 전송처리 -->
+	<!-- 
     <repositories>
-		<!-- local -->
 		<repository>
 			<id>local-repo</id>
 			<name>local Repository</name>
 			<url>file://${project.basedir}/tmp-repo</url>
 		</repository>
 	</repositories>
-    
+     -->
+     
     <!-- maven deploy사용을 위한 저장소 위치설정 -->
     <distributionManagement>
        <repository>
