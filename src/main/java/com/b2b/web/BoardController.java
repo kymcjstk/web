@@ -31,9 +31,7 @@ import lombok.extern.log4j.Log4j;
 
 import com.b2b.web.model.PageMaker;
 
-/*
-@Log4j */ /* lombok을 이용한 로그출력설정*/
-
+@Log4j  /* lombok을 이용한 로그출력설정*/
 @Controller
 @RequestMapping("/board")
 public class BoardController {
