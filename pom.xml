@@ -335,7 +335,7 @@
 		<repository>
 			<id>local-repo</id>
 			<name>local Repository</name>
-			<url>file://${userdir}/tmp-repo</url>
+			<url>file://${project.basedir}/tmp-repo</url>
 		</repository>
 	</repositories>
     
