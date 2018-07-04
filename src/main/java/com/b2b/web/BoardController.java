@@ -32,7 +32,7 @@ import lombok.extern.log4j.Log4j;
 
 import com.b2b.web.model.PageMaker;
 
-@Log4j  /* lombok을 이용한 로그출력설정*/
+/*@Log4j*/  /* lombok을 이용한 로그출력설정 jenkens에서 에러발생*/
 
 @Controller
 @RequestMapping("/board")
