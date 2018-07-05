@@ -453,32 +453,32 @@ tmp-repo폴더에, /com/inicis/inipay/INIpay/5.0/INIpay-5.0.jar등록 후,
 13.jstl문법 추가정리 (완료) - 7/5
 
 - 변수의 선언
-<c:set var=”t” value=”hello”/>
+<c:set var="t" value="hello"/>
 - 변수의 제거
-<c:remove var=”name”/>
+<c:remove var="name"/>
 - forEach 예문 (보통의 for문 & 개선된 루프)
-<c:forEach items=”${pageScope }” var=”h”>
- <c:out value=”${h }”/>
+<c:forEach items="${pageScope }" var="h">
+ <c:out value="${h }"/>
 </c:forEach>
   => 위의 예문은 pageScope EL내장객체의 모든 요소를 루프를 통해 뽑아내어 출력하는 문장이다.
 
-<c:forEach var=”h” items=”${header}”>
- <c:out value=”${h.key}:${h.value }”/><br>
+<c:forEach var="h" items="${header}">
+ <c:out value="${h.key}:${h.value }"/><br>
 </c:forEach>
   => 위의 예문은 header 내장객체의 모든 요소를  key와  value로 구분하여 출력하는 문장이다.
 
-<c:forEach var=”one” begin=”1″ end=”10″ step=”1″>
- <c:out value=”${one}”/>
+<c:forEach var="one" begin="1" end="10" step="1">
+ <c:out value="${one}"/>
 </c:forEach>
  => 위의 예문은 반복할 횟수를 직접 지정하여 루프를 돌리는 문장이다. (var, step은 생략가능)
 
-<c:forEach items=”${color }” varStatus=”i“>
- <c:out value=”${i.count }”/>
- <c:out value=”${color[i.index] }”/><br/>
+<c:forEach items="${color }" varStatus="i">
+ <c:out value="${i.count }"/>
+ <c:out value="${color[i.index] }"/><br/>
 </c:forEach>
   => 위의 예문은 카운트숫자 i 를 설정하여 for 문을 돌리는 문장이다.
 
-<c:forEach varStatus=’i’ var=”cart” items=”${cartList}”>
+<c:forEach varStatus="i" var="cart" items="${cartList}">
  ${cart.userNum}
  ${cart.prodNum}
 </c:forEach>
@@ -486,15 +486,15 @@ tmp-repo폴더에, /com/inicis/inipay/INIpay/5.0/INIpay-5.0.jar등록 후,
       items는 List객체 자체를 받아서 루프의 구조를 만든다.
       var는 List로 묶여있던 각각의 요소 객체를 참조하게 해 주는 이름이다.
 
-<c:forEach items=”${codeMap}” var=”map”>
+<c:forEach items="${codeMap}" var="map">
 	${map.key1}:${map.key2}
 </c:forEach>
   => 
 위의 예문은 Map객체 codeMap 에서 각 요소를 뽑아 for문을 돌리는 문장이다. 
 
 - forTokens 예문 (StringTokenizer)
-<c:forTokens var=”one” items=”서울|인천,대구,부산,찍고” delims=”,” varStatus=”sts”>
- <c:out value=”${sts.count }:${one}”/>&middot;
+<c:forTokens var="one" items="서울|인천,대구,부산,찍고" delims="," varStatus="sts">
+ <c:out value="${sts.count }:${one}"/>&middot;
 </c:forTokens>
   => forTokens 역시 begin, step, end 를 지정할 수 있고, varStatus는 생략가능하다. 
 
@@ -510,8 +510,8 @@ tmp-repo폴더에, /com/inicis/inipay/INIpay/5.0/INIpay-5.0.jar등록 후,
 <c:if test="${empty name}">
     홍길동이 아닙니다.
 </c:if>
-<c:if test="${name eq '홈길동'}">
-<c:if test="${name ne '홈길동'}">
+<c:if test="${name eq '홈길동'}"></c:if>
+<c:if test="${name ne '홈길동'}"></c:if>
 
 <c:choose>
     <c:when test="${name eq '홍길동'}">
@@ -525,61 +525,66 @@ tmp-repo폴더에, /com/inicis/inipay/INIpay/5.0/INIpay-5.0.jar등록 후,
     </c:otherwise>
 </c:choose>
 
-- <c:out> – System.out.println()
+- <--c:out--> – System.out.println()
 1. body가 없는 경우
-   <c:out value=”value”  [escapeXml=”{true|false}”]  [default=”기본값”] />
+   <--c:out value="value"  [escapeXml="{true|false}"]  [default="기본값"] /-->
 2. body가 있는 경우
-   <c:out value=”value”  [escapeXml=”{true|false}”] >
+   <--c:out value="value"  [escapeXml="{true|false}"] -->
       기본값
-   </c:out>
-  => escapeXml 속성은 값 중에 포함된 < > & ‘ ” 문자들을 각각 &lt;  &gt;  &amp;  &#039;  &#034; 로 출력한다. 
+   <--/c:out-->
+  => escapeXml 속성은 값 중에 포함된 < > & ‘ " 문자들을 각각 &lt;  &gt;  &amp;  &#039;  &#034; 로 출력한다. 
       생략할 경우 true가 기본값이다.
-  => NULL 값의 처리에 대해서 JSP에서는 “null” 문자열로 출력되었던 것에 비해 JSTL의 스펙에서는 빈문자열(“”)
+  => NULL 값의 처리에 대해서 JSP에서는 “null" 문자열로 출력되었던 것에 비해 JSTL의 스펙에서는 빈문자열(“")
       또는 기본값으로 처리한다고 명시되어 있다.
 
-- <c:catch/> : Try~Catch
-<c:catch var=”errmsg“>
+- <--c:catch/--> : Try~Catch
+<--c:catch var="errmsg"-->
 line1
-<%=1/0 %> => 에러가 나는 코드
+<--%=1/0 %--> => 에러가 나는 코드
 line2
-</c:catch>
-<c:out value=”${errmsg }”/>
+<--/c:catch-->
+<--c:out value="${errmsg }"/-->
   => 시작 catch 태그에 변수를 선언하면 그 변수에 Exception의 내용이 들어가게 된다.
 
-- <c:import/>
+- <--c:import/-->
    – 웹어플리케이션 내부의 자원접근은 물론이고, http, ftp 같은 외부에 있는 자원도 가져와서 페이지
     내에 귀속시킨다.  자유롭게 가공할 수도 있고, 편집도 가능하다. 
    – 스트림으로 받아와서 파일로 저장하거나, DB에 입력할 수도 있도록 되어 있다.
-<c:set var=”url” value=”http://www.google.co.kr”/>
-<c:import url=”${url}” var=”u”/> => URL에 해당하는 페이지에 있는 모든 요소를 변수에 할당함.
-<c:out value=”${url }”/> 가져옵니다.
+<--c:set var="url" value="http://www.google.co.kr"/-->
+<--c:import url="${url}" var="u"/--> => URL에 해당하는 페이지에 있는 모든 요소를 변수에 할당함.
+<--c:out value="${url }"/--> 가져옵니다.
 
-<base href=”<c:out value=’${url }’/>”> => base 태그는 해당 URL을 기반으로 상대경로화 하므로 이미지가
+<--base href="<c:out value="${url }"/>"--> => base 태그는 해당 URL을 기반으로 상대경로화 하므로 이미지가
                                                             깨지지 않도록 만들어 준다.
- <c:out value=”${u }” escapeXml=”false”/> => 위에서 만든 변수를 출력하면 모든 코드가 출력된다.
-</base>                                                      escapeXml=”false” 로 해야 화면이 제대로 보인다.
+ <--c:out value="${u }" escapeXml="false"/--> => 위에서 만든 변수를 출력하면 모든 코드가 출력된다.
+<--/base-->                                                      escapeXml="false" 로 해야 화면이 제대로 보인다.
 
-- <c:url/> : request.getContextPath()
-<img src=”<c:url value=”/images/winter.jpg”/>”>
+- <--c:url/--> : request.getContextPath()
+<--img src="<c:url value="/images/winter.jpg"/>"-->
  => 이렇게 c:url 태그의 value로 넣어주는 것 만으로, 현재 컨텍스트의 경로를 갖다가 붙여서 새 문자열을 만든다.
- => context 속성을 지정해 줄 수도 있는데, context 속성을 지정해 주었을 경우에, context, value 는 “/”로 시작
+ => context 속성을 지정해 줄 수도 있는데, context 속성을 지정해 주었을 경우에, context, value 는 “/"로 시작
       해야 한다.
 
-- <c:redirect/> : request.sendRedirect()
-<c:redirect url=”jstlcore01.jsp”>
- <c:param name=”number” value=”300″/>
-</c:redirect>
+- <--c:redirect/--> : request.sendRedirect()
+<--c:redirect url="jstlcore01.jsp"-->
+ <--c:param name="number" value="300"/-->
+<--/c:redirect-->
  => url에 해당하는 페이지로 리다이렉션 하면서 파라미터를 가지고 간다. body 없이 사용 가능하다.
- => c:url 과 마찬가지로 context 속성을 지정하면, value와 context는 “/”로 시작해야 한다.
+ => c:url 과 마찬가지로 context 속성을 지정하면, value와 context는 “/"로 시작해야 한다.
 
-- <c:param/>
-<c:import url=”http://bruce.com”>
-   <c:param name=”action” value=”register”/>
-</c:import>
+- <--c:param/-->
+<--c:import url="http://bruce.com"-->
+   <--c:param name="action" value="register"/-->
+<--/c:import-->
  => 위 태그는 다음과 같은 쓸 수 있다.
 
  
 14. restful api연동 - 7/12
+- 기본적으로는 RestController 만으로 사용가능함(view페이지가없이 데이터처리를 위한 컨트롤러 처리사항)
+
+- 해당 컨트롤러와 json형식으로 이용하여, 간단한 게시판페이지작성필요
+- spring boot이용하여, token방식에 처리기능포함된 작업필요
+
 
 15. Native영역과 REST 통신 - 7/18
 
