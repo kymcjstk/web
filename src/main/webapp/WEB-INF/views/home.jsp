@@ -450,7 +450,7 @@ tmp-repo폴더에, /com/inicis/inipay/INIpay/5.0/INIpay-5.0.jar등록 후,
     <version>5.0</version>
 </dependency>
 
-13.jstl문법 추가정리 - 7/9
+13.jstl문법 추가정리 (완료) - 7/5
 
 - 변수의 선언
 <c:set var=”t” value=”hello”/>
