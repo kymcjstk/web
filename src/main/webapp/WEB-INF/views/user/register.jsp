@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<%@ include file="../include/head.jsp" %>
+<%@include file="/WEB-INF/views/include/header.jsp" %>
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
@@ -65,7 +65,7 @@
 </div>
 <!-- /.register-box -->
 
-<%@ include file="../include/plugin_js.jsp" %>
+
 <script>
     $(function () {
         $('input').iCheck({
