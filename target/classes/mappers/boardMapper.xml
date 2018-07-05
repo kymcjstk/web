@@ -4,6 +4,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.b2b.web.board.mapper.MemberMapper">
 
+	<!--게시글 조회-->
+    <select id="read" resultType="BoardVO">
+        SELECT
+            bno
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+        FROM world.tbl_board
+        WHERE bno = #{bno}
+    </select>
+    
+    <!--게시글 viewcount 수정-->
+    <update id="update_viewcount">
+        UPDATE tbl_board
+        SET viewcnt = #{viewcnt}
+        WHERE bno = #{bno}
+    </update>
+    
+    <!--게시글 수정-->
+    <update id="update">
+        UPDATE tbl_board
+        SET title = #{title}
+            , content = #{content}
+            , writer = #{writer}
+        WHERE bno = #{bno}
+    </update>
+    
+    <!--게시글 삭제-->
+    <delete id="delete">
+        DELETE FROM tbl_board
+        WHERE bno = #{bno}
+    </delete>
+    
+     <!--게시글 입력-->
+    <insert id="create">
+        INSERT INTO tbl_board (
+            title
+            , content
+            , writer
+            , attachcnt
+        ) VALUES (
+            #{title}
+            , #{content}
+            , #{writer}
+            , #{attachcnt}
+        )
+    </insert>
+    
     <select id="getTime" resultType="string">
         SELECT NOW()
     </select>

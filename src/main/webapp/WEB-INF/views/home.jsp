@@ -102,9 +102,28 @@ web.xml페이지내 dtd변경
  --> add to index dlgn,  commit 하여 완료  
  <img src="/b2b_web/images/git1.png">
  <img src="/b2b_web/images/git2.png">
+
+- git사용법
+git clone /로컬/저장소/경로 : 로컬 저장소를 복제할때
+git clone 사용자명@호스트:/원격/저장소/경로 :원격서버의 저장소를 복제할때
+
+- 구조
+working directory -add- index들.. -commit - head(최종본)
+
+git add <파일명> / git add * : 변경된 파일을 index에 추가함 --> git commit -m "설명" 으로 head에 반영됨 -- 로컬저장소저장됨/원격 저장소처리 저장안된상태임.
+git push origin master : 원격서버 head 내, master가지로 업로드됨
+
+- branch사용
+git checkout -b abc_x (abc_x라는 이름의 가지를 만들고 갈아탐) 
+
+git checkout master (master로 돌아옴)
+
+git pull : 원격저장소 변경사항을 로컬디렉토리에 받음(fetch), 병합(marge)됨
+git merge <가지이름> : 다른 가지의 변경내용을 현재 위치에 병합함
  
- commit and push = commit
- checkout
+ 
+commit and push = commit
+checkout
  
 git fetch
 git fetch 명령은 로컬 데이터베이스에 있는 것을 뺀 리모트 저장소의 모든 것을 가져온다.
@@ -299,6 +318,25 @@ base directory --> 해당 프로젝트 선택
 goals: test, install, deploy등..
 user settings: pom.xml등 setting위치
 maven runtime: maven설치버전
+- goals 설명
+clean : 컴파일 결과물인 target 디렉토리 삭제
+compile : 모든 소스코드 컴파일, 리소스파일을 target/classes 디렉토리에 복사
+package : compile 수행 후, 테스트 수행, <packaging> 정보에 따라 패키징 수행
+install : package 수행 후, local repo에 install 수행
+deploy : install 수행 후, 배포 수행, 여기서 배포는 웹서버에 배포가 아니다. 회사 repo에 배포다.
+아래와 같이 distributionManagement 항목이 기술되어야 한다.
+<distributionManagement>
+	<repository>
+		<id>releases-repo</id>
+		<name>Releases Repository</name>
+		<url>회사repository주소(넥서스)</url>
+	</repository>
+	<snapshotRepository>
+		<id>snapshots-repo</id>
+		<name>Snapshots Repository</name>
+		<url>회사repository주소(넥서스)</url>
+	</snapshotRepository>
+</distributionManagement>
 
 read페이지(완료) - 6/25
 -- 트랜젝션처리 
@@ -345,15 +383,8 @@ delete페이지 (완료) - 6/25
 
  12. 젠킨스 설정/활용 과 git/svn연동 배포  - 7/5
  -- 젠킨스 설치
- tomcat설치 후, conf/tomcat-user.xml 파일에, 
- <role rolename="manager-gui"/>
- <role rolename="manager-script"/>
- <role rolename="manager-jmx"/>
- <role rolename="manager-status"/>
- <role rolename="admin-gui"/>
- <role rolename="admin-script"/>
- <user username="admin" password="admin" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
- 추가 후, 젠킨스다운로드 (LTS부분에서 Generic Java package(.war)파일을 톰캣의 webapps폴더에 다운로드 -->톰캣을 실행후 localhost:8080/jenkins를 실행) 계정비번복사 후
+ tomcat설치 후, 
+ 젠킨스다운로드 (LTS부분에서 Generic Java package(.war)파일을 톰캣의 webapps폴더에 다운로드 -->톰캣을 실행후 localhost:8080/jenkins를 실행) 계정비번복사 후
  C:\Windows\System32\config\systemprofile\.jenkins\secrets,
  계정생성 후 로그인 --> 메뉴안보이거나 문제있을시, 삭제후 재설치하면 보임
  --> 각 git/svn등에서, 젠킨스가 연결할 수 있도록 권한설정이 필요함: github경우... setting-developer sttings -> personal access tonkens --> generat new token클릭한 후
@@ -368,7 +399,12 @@ gradle다운로드 (다운로드 설치 후,  gradle경로지정:D:\gradle-4.8.1
 새프로젝트 생성 - 새로운item생성 - (freestyle porject생성)
 --> general에서,  github project-project url:경로지정(https://github.com/kymcjstk/web.git/)
 소스코드관리 - git url: https://github.com/kymcjstk/web.git, add credentials id/password로 설정하여 입력 후 지정,
-build에서,  Invoke top-level Maven target - maven으로 선택한 후, 버전선택 후.. goals에 clean package tomcat:redeploy -P production -D maven.test.skip=true 입력하고 완료
+build에서,
+Invoke top-level Maven target - maven으로 선택한 후, 버전선택 후.. 
+goals에
+clean package 또는 clean install하고선,
+1. 종료 
+2. tomcat:redeploy -P production -D maven.test.skip=true 입력하고 완료
 이후 확인필요:build - invoke gradle script에서, gradle선택 후,  taskes에 clean 과 bulid입력
 
 tomcat:redeploy
@@ -382,6 +418,37 @@ tomcat:redeploy
 -D maven.test.skip=true
 테스트를 생략하겠다는 설정입니다.
 
+- 빌드 후 조치 추가하여,  tomcat서버에 배포처리
+Deploy war/ear to a container에서,
+war/ear files --> **/*.war
+content path --> 폴더명 (예:/b2b_web)
+contanies에서,  tomcat버전 및 계정정보/url입력(에: creadentials선택 후, http://localhost:8080 입력)
+ --> 해당 tomcat서버 conf/tomcat-user.xml에서는 
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<role rolename="admin-gui"/>
+<role rolename="admin-script"/>
+<user username="아이디" password="비번" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+있어야함 
+
+빌드시, maven url로 다운불가능한 경우 프로젝트등 로컬에서 등록처리
+pom.xml에, 예제와같이 등록하여, tmp-repo디렉토리에 jar파일등록하여 사용가능
+<!-- local 저장소설정으로 maven서버로 jar파일 전체 전송처리 -->
+<repository>
+	<id>local-repo</id>
+	<name>local Repository</name>
+	<url>file://${project.basedir}/tmp-repo</url>
+</repository>
+
+tmp-repo폴더에, /com/inicis/inipay/INIpay/5.0/INIpay-5.0.jar등록 후,
+아래와 같이 pom.xml에 등록
+<dependency>
+    <groupId>com.inicis.inipay</groupId>
+    <artifactId>INIpay</artifactId>
+    <version>5.0</version>
+</dependency>
  
  13. restful api연동 - 7/12
 
