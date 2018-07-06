@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -59,12 +60,18 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
     }
     
+    @Value("${app.domain}")
+	private String domain;
+    
+    
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
         
     	HttpSession session = request.getSession();
+    	
+    	System.out.println("domain : "+domain);
         
     	System.out.println("url3 : "+env);
 

@@ -357,7 +357,14 @@ delete페이지 (완료) - 6/25
  9. 세션 및 로그인 /인터셉터/프로퍼티 (완료)- 6/28
  --- password 암호호처리를 위해 라이브러리  jackson-databind 추가
  --- 인터셉터 설정: servlet-context.xml내, bean 과 interceptor 지정
- --- properties 설정(root-context.xml) 및 해당내부 호출사용, java파일내,  파일불러와서 properties로 지정하여, 설정값 사용예(Authinterceptor.java)
+ --- properties 설정(root-context.xml) 및 해당내부 호출사용, 
+ --- java파일내,  파일불러와서 properties로 지정하여, 설정값 사용예(Authinterceptor.java),  
+ @Configuration
+ @PropertySource(value = { "classpath:application.properties"}) 
+ @Autowired
+ private Environment env; 이후,  호출 또는
+ @Value("${app.domain}")
+ private String domain; 호출
  
  10. 결제 (완료)
  - 이니시스모듈 설치연동
@@ -586,7 +593,7 @@ line2
 - spring boot이용하여, token방식에 처리기능포함된 작업필요
 
 
-15. Native영역과 REST 통신 - 7/18
+15. Native영역과 REST 통신 및 @설정부분들과 관련전송부분(maping관련설정 - jsen식이라든지..) )- 7/15
 
 16. srping boot 이용 + radis등 캐쉬 - 7/31
 
