@@ -11,11 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 */
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +53,12 @@ public class BoardController {
     @Autowired
     PlatformTransactionManager transactionManager;
     
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = "/list", produces = MediaType.TEXT_HTML_VALUE )
+    /*
+     * produces = MediaType.TEXT_HTML_VALUE
+     * produces: 미디어타입을 지정하여 받을 수 있음
+     * produces = "text/plain;charset=UTF-8" 으로 utf-8지정도 가능
+     */
 	public String list(@ModelAttribute("search") SearchVO search, @ModelAttribute("boardvo") BoardVO boardvo, Model model) throws Exception {
 		
     	/*log.info("");*/ /* lombok을 이용한 로그출력사용가능*/
@@ -171,7 +178,7 @@ public class BoardController {
         return "/board/list";
     }
     
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
+    @RequestMapping(value = "/read", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public String read(@RequestParam("bno") int bno,
                        @ModelAttribute("search") SearchVO criteria, HttpServletResponse response, Model model) throws Exception {
 

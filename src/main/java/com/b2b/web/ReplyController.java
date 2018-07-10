@@ -20,11 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+ * @RestController 으로 view단 없이, restful처리
+ */
 @RestController
 @RequestMapping("/replies")
 public class ReplyController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReplyController.class);
 
     
     @Inject
@@ -37,15 +40,26 @@ public class ReplyController {
     // 댓글 목록
     @RequestMapping(value = "/all/{bno}", method = RequestMethod.GET)
     public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Integer bno) {
-
+    
+    /*
+     * @PathVariable mapping value값 중, 지정부분을 추출가능
+     */
         ResponseEntity<List<ReplyVO>> entity = null;
-
+        
+        /*
+         *ResponseEntity 구문으로 http출력처리 
+         */
+        
         try {
-            entity = new ResponseEntity<>(replydao.list_Reply(bno), HttpStatus.OK);
+        	HttpHeaders responseHeaders = new HttpHeaders();
+	        responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
+            entity = new ResponseEntity<>(replydao.list_Reply(bno), responseHeaders, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        
+        System.out.println("entity:"+entity);
 
         return entity;
     }
@@ -53,12 +67,20 @@ public class ReplyController {
     // ResponseEntity : 결과데이터 + HTTP 상태코드를 제어할 수 있는 클래스
     // 댓글 등록
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
-
-    	/*
-    	 * @RequestBody - HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할을 합니다.
-    	 * 현재구조 경우, ReplyVO값을 위해 json형식으로 전달되어여햐 변경없이 입력가능함. 
-    	 */
+    /*public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
+     *  @RequestBody 으로 전송데이터 text형태로 받음 - 앞페이지에서, json형식으로 전달하여, 그대로 사용가능함
+     */
+    public ResponseEntity<String> register(@ModelAttribute("replyVO") ReplyVO replyVO) {
+    /* 
+     * @ModelAttribute 으로 form값으로 전송받은 형태로 "전송명:전송값"
+     */
+    	
+	/*
+	 * @RequestBody - HTTP 요청의 body 내용을 자바 객체로 매핑하는 역할을 합니다.
+	 * 현재구조 경우, ReplyVO값을 위해 json형식으로 전달되어여햐 변경없이 입력가능함. 
+	 */
+	
+    	System.out.println("replyVO:" + replyVO);
 
         ResponseEntity<String> entity = null;
         
@@ -72,6 +94,7 @@ public class ReplyController {
 	    	HttpHeaders responseHeaders = new HttpHeaders();
 	        responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
 	        entity = new ResponseEntity<String>("INSERTED", responseHeaders, HttpStatus.OK);
+	        
     	} catch (Exception e) {
     		
     		this.transactionManager.rollback(status);
@@ -109,9 +132,15 @@ public class ReplyController {
             map.put("replyCount", replyCount);
             map.put("pageMaker", pageMaker);
             
-            System.out.println("map:"+map);
-
+            /*
+             *ResponseEntity 구문으로 http출력처리 
+             */
+            
+            HttpHeaders responseHeaders = new HttpHeaders();
+	        responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
             entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+            
+            System.out.println("map:"+map);
 
         } catch (Exception e) {
             e.printStackTrace();

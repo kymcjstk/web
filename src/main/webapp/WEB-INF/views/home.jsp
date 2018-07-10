@@ -587,21 +587,26 @@ line2
 
  
 14. restful api연동 - 7/12
-- 기본적으로는 RestController 만으로 사용가능함(view페이지가없이 데이터처리를 위한 컨트롤러 처리사항)
+- 기본적으로는 RestController 만으로 사용가능함(view페이지가없이 데이터처리를 위한 컨트롤러 처리사항) - replycontroller.java에 구현됨
 
-- 해당 컨트롤러와 json형식으로 이용하여, 간단한 게시판페이지작성필요
-- spring boot이용하여, token방식에 처리기능포함된 작업필요
+- spring boot이용하여, token방식에 처리기능포함(oauth2)
+(spring boot + spring security + jpa + rest + h2 + lombok)
+
+- Dependencies
+Security:: http://projects.spring.io/spring-security/[Spring Security](이하 스프링 시큐리티) 사용하기 위해 필요하며 OAuth2 서버를 만들 때 필요하다.
+JPA:: http://projects.spring.io/spring-data-jpa/[Spring Data JPA](이하 스프링 데이터 JPA)를 스프링 부트에 맞도록 사용하기 위한 의존성을 제공하기 위해 추가하는 것으로 손쉽게 DB를 JPA로 접근하는 형태를 사용하기 위해서 추가했다.
+Rest Repositories:: http://projects.spring.io/spring-data-rest/[Spring Data Rest](이하 스프링 데이터 Rest)를 스프링 부트에 맞도록 쉽게 사용할 수 있는 형태 제공하는 부분이면 Rest API 서버를 쉽게 만들어 준다. ( Web을 따로 포함하지 않아도 스프링 MVC를 사용할 수 있는 의존성이 제공된다. )
+h2:: 샘플을 빠르게 만들 수 있도록 내장 DB를 사용하기 위해 추가한 부분으로, 추후에 Mysql 등 다른 DB로 쉽게 바꿀 수 있다.
+lombok:: 어노테이션을 사용해서 소스의 양을 줄어들도록 만들어 주는 라이브러리이다. 컴파일 타임에 사용되며 주로 getter, setter를 생략하는데 자주 사용된다. 처음 접한 분이라면 
 
 
-15. Native영역과 REST 통신 및 @설정부분들과 관련전송부분(maping관련설정 - jsen식이라든지..) )- 7/15
+15. srping boot 이용 + radis등 캐쉬 - 7/31
 
-16. srping boot 이용 + radis등 캐쉬 - 7/31
+16. x플랫폼, 넥사크로 설치사용 - 8/19
 
-17. x플랫폼, 넥사크로 설치사용 - 8/19
+17. spring security을 통한 로그인/로그아웃 구현 - 8/27
 
-18. spring security을 통한 로그인/로그아웃 구현 - 8/27
-
-19. 엥귤러 및 nodejs/리엑트js 사용/활용 - 9/19
+18. 엥귤러 및 nodejs/리엑트js 사용/활용 - 9/19
 
 ... velocity, postgresql, graddle 사용
 

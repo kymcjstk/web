@@ -282,16 +282,22 @@
             $.ajax({
                 type: "post",
                 url: "${path}/replies/",
-                headers: {
-                    "Content-Type" : "application/json",
-                    "X-HTTP-Method-Override" : "POST"
-                },
                 dataType: "text",
-                data: JSON.stringify({
-                   bno:bno,
-                   replyer:replyer,
-                   replytext:replytext
-                }),
+              	//headers: {
+                //    "Content-Type" : "application/json",
+                //    "X-HTTP-Method-Override" : "POST"
+                //},
+                //data: JSON.stringify({
+                //   bno:bno,
+                //   replyer:replyer,
+                //   replytext:replytext
+                //}),
+                // 위와 같이 json형식으로 전송처리 후, 해당값으로 처리가능
+                data: {bno:bno,
+                	replyer:replyer,
+                	replytext:replytext} 
+                 ,
+                //post에 form처리로 처리가능
                 success: function (result) {
                     console.log("result : " + result);
                     if (result == "INSERTED") {
