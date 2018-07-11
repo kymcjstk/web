@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.b2b.web.dao.BoardDAO;
 import com.b2b.web.dao.MemberDAO;
@@ -34,6 +35,8 @@ import com.inicis.std.util.ParseUtil;
 import com.inicis.std.util.SignatureUtil;
 
 import com.b2b.web.model.lombokTest;
+
+import com.b2b.web.dao.RedisService;
 
 /**
  * Handles requests for the application home page.
@@ -52,6 +55,9 @@ public class HomeController {
 	*/
 	@Autowired
 	BoardDAO boardService;
+	
+	@Autowired
+	RedisService redisService;
 	
 	
 	/**
@@ -101,6 +107,19 @@ public class HomeController {
         model.addAttribute(vo);
         model.addAttribute("vo", vo);
         
+        String count = redisService.getVisitCount();
+        ModelAndView model1 = new ModelAndView("index");
+		//model1.addObject("count", count);
+		
+		//System.out.println("count:" + count);
+        
+		redisService.Redis_Map("abc");		
+		redisService.Redis_Map2("ktd");
+		redisService.Redis_List("abc");
+		
+		/*redisService.testListOpenationObject();*/
+		redisService.testListOperationString();
+		
         return "test2";
     }
     

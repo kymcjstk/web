@@ -586,10 +586,10 @@ line2
  => 위 태그는 다음과 같은 쓸 수 있다.
 
  
-14. restful api연동 - 7/12
+14. restful api연동  (token처리 보류 - spring boot + spring security + oauth2 사용 및 확장성처리 )- 7/12
 - 기본적으로는 RestController 만으로 사용가능함(view페이지가없이 데이터처리를 위한 컨트롤러 처리사항) - replycontroller.java에 구현됨
 
-- spring boot이용하여, token방식에 처리기능포함(oauth2)
+- spring boot이용하여, token방식에 처리기능포함(oauth2)  -  추후 개발진행
 (spring boot + spring security + jpa + rest + h2 + lombok)
 
 - Dependencies
@@ -600,15 +600,40 @@ h2:: 샘플을 빠르게 만들 수 있도록 내장 DB를 사용하기 위해 �
 lombok:: 어노테이션을 사용해서 소스의 양을 줄어들도록 만들어 주는 라이브러리이다. 컴파일 타임에 사용되며 주로 getter, setter를 생략하는데 자주 사용된다. 처음 접한 분이라면 
 
 
-15. srping boot 이용 + radis등 캐쉬 - 7/31
+15. srping boot 이용 + radis/MongoDB 연동하여 데이터 넣고 불러오기  (등록/처리관련 확장부분에 대해서는 추후 개발진행 ) - 7/13
+radis 설치 및 연동 (데이터연결, select/insert/update/delete 처리)
+- 원도우 radis설치 
+cmd창으로 서비스 시작/중단 처리가능(NET START Redis/NET STOP Redis), 구동설정 및 확인(redis-server.exe)
+서버실행 (redis-server redis.windows.conf) - 환경설정파일지정
 
-16. x플랫폼, 넥사크로 설치사용 - 8/19
+클라이언트를 이용한 서버접속(redis-cli.exe) 
+-redis-cli –h host주소 –p port번호 –a password정보
+예)redis-cli –h 127.0.0.1 –p 6379 –a abcd
+
+서비스등록 - redis-server --service-install redis.windows.conf --loglevel notice
+서비스시작 - redis-server --service-start
+서비스중지 - redis-server --service-stop
+서비스해제 - redis-server --service-uninstall
+conf파일에서, 1.port위치에서, 변경가능, 2.bind 127.0.0.1에서,  추가접속허용ip주소 추가 또는 0.0.0.0 으로 전체허용가능, 3.requirepass 비밀번호설정 가능 
+외부에서 접속시, redis-tools설치하여 접속가능
+
+redis연동 설정
+- pom.xml (spring-boot-starter-redis, jedis 추가)
+- com.b2b.web.commons.springredisconfig에 연결설정
+- com.b2b.web.dao.redisservice에 실행예제 지정 후, homecontroller에 실행(/test2)
+- 추가적인 테스트예제 - src.test.java내, redis추가함
+
+MongoDB 설치 및 연동 (데이터연결, select/insert/update/delete 처리)
+
+
+16. x플랫폼/넥사크로 설치 및 사용 - 8/19
+
 
 17. spring security을 통한 로그인/로그아웃 구현 - 8/27
 
 18. 엥귤러 및 nodejs/리엑트js 사용/활용 - 9/19
 
-... velocity, postgresql, graddle 사용
+... velocity, vue.js, graddle 사용
 
 <P>  The time on the server is ${serverTime}. </P>
 </body>
