@@ -623,15 +623,17 @@ redis연동 설정
 - com.b2b.web.dao.redisservice에 실행예제 지정 후, homecontroller에 실행(/test2)
 - 추가적인 테스트예제 - src.test.java내, redis추가함
 
-MongoDB 설치 및 연동 (데이터연결, select/insert/update/delete 처리)
+MongoDB 설치 및 연동 (데이터연결, select/insert/update/delete 처리) - 8/26(예정)
 
 
-16. x플랫폼/넥사크로 설치 및 사용 - 8/19
+16. x플랫폼/넥사크로 설치 및 사용 - 9/30(예정)
 
 
-17. spring security을 통한 로그인/로그아웃 구현 - 8/27
+17. 하이버네이트, JPA 활용 사용 - 10/20(예정)
 
-18. 엥귤러 및 nodejs/리엑트js 사용/활용 - 9/19
+18. spring security을 통한 로그인/로그아웃 구현 - 11/04(예정)
+
+19. 엥귤러 및 nodejs/리엑트js 사용/활용 - 11/30(예정)
 
 ... velocity, vue.js, graddle 사용
 
